@@ -33,14 +33,14 @@
             overflow-x: hidden;
         }
 
-        /* 极致颗粒感叠层：复刻插画纸张质感 */
+        /* 极致颗粒感叠层 */
         .noise-overlay {
             position: fixed;
             inset: 0;
             pointer-events: none;
             z-index: 9999;
             mix-blend-mode: multiply;
-            opacity: 0.14;
+            opacity: 0.12;
             filter: url(#riso-grain);
             background-color: var(--accent-purple);
         }
@@ -56,7 +56,7 @@
         }
 
         .animate-fade-in {
-            animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes fadeIn {
@@ -64,7 +64,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Paradiso 风格：虚线流动动画 */
+        /* Paradiso 风格：虚线流动 */
         .dotted-path {
             stroke-dasharray: 2 8;
             stroke-linecap: round;
@@ -89,12 +89,12 @@
             100% { transform: translate(30px, -40px); }
         }
 
-        /* 选项按钮：手机端极致紧凑优化 */
+        /* 选项按钮：压缩垂直空间，解决残留停留问题 */
         .option-btn {
             transition: all 0.3s ease;
             border-bottom: 1px solid rgba(146, 129, 195, 0.15);
             text-align: left;
-            padding: 0.6rem 0; /* 极致压缩垂直空间 */
+            padding: 0.6rem 0; 
             width: 100%;
             outline: none;
             background: transparent;
@@ -102,7 +102,7 @@
 
         @media (min-width: 768px) {
             .option-btn {
-                padding: 1.2rem 0; 
+                padding: 1.1rem 0; 
             }
         }
 
@@ -112,8 +112,8 @@
         }
 
         .option-btn.selected {
-            background-color: rgba(146, 129, 195, 0.12);
-            border-bottom: 1.5px solid var(--accent-purple);
+            background-color: rgba(146, 129, 195, 0.15);
+            border-bottom: 2px solid var(--accent-purple);
             padding-left: 1.2rem;
             transform: scale(0.99);
         }
@@ -204,7 +204,7 @@
                 { text: "这种“看不清”的模糊，正是记忆最真实的存档方式", type: "RICHTER" }, { text: "它见证了时间的单向流逝，透出某种庄严的荒凉", type: "SUGIMOTO" }, { text: "它是一叠关于文明兴衰的纸质报告，沉重且易碎", type: "DA_VINCI" }, { text: "我想在上面涂抹大块鲜亮的色彩，重新注入活力", type: "MATISSE" }
             ]},
             { id: 8, text: "如果让你画出“孤独”，你会如何表达？", source: "当代艺术对孤独的物质化处理", options: [
-                { text: "一间密闭的铁笼，里面装满了带不走的私密往事", type: "BOURGEOIS" }, { text: "在茫茫海平面的一端，一个枯坐到地平线消失的背影", type: "SUGIMOTO" }, { text: "繁华闹市中，一个试图通过重复符号隐身的人", type: "KUSAMA" }, { text: "穿梭于各种虚假面孔中，却从未显露真正的人格", type: "RICHTER" }
+                { text: "一间密闭的铁笼，里面装满了带不走的私密往事", type: "BOURGEOIS" }, { text: "在茫茫海平面的一端，一个枯坐到地平线消失的背影", type: "SUGIMOTO" }, { text: "繁华闹市中，一个试图通过重复符号消融自己", type: "KUSAMA" }, { text: "穿梭于各种虚假面孔中，却从未显露真正的人格", type: "RICHTER" }
             ]},
             { id: 9, text: "当你走进一个充满人造彩虹的房间，你的感受是：", source: "奥拉维尔·埃利亚松 生态实验室", options: [
                 { text: "自然奇观被人工模拟后、产生的一种生理性颤栗", type: "ELIASON" }, { text: "光影斑斓得如同昂贵的金属玩具，令人产生占有欲", type: "DA_VINCI" }, { text: "这是一种极其精细、值得反复观察的光谱科学现象", type: "MONET" }, { text: "这些彩虹背后，是否藏着艺术家某个自传式的隐喻", type: "BOURGEOIS" }
@@ -269,7 +269,7 @@
             { id: 29, text: "如果你看到有人在神圣的殿堂里大笑，你会：", source: "权威挑战测试", options: [
                 { text: "静静观察大笑时人脸部的肌肉走向与结构变化", type: "DA_VINCI" }, { text: "觉得这大笑声形成了一种支离破碎的几何空间断裂", type: "PICASSO" }, { text: "被这种挑战权威的荒诞感所吸引，想和他一起大笑", type: "CATTELAN" }, { text: "觉得这笑声里一定藏着对这个荒唐世界的深层焦虑", type: "VAN_GOGH" }
             ]},
-            { id: 30, text: "最后，如果你一生的执念凝练成了一件圣器，它会是：", source: "终焉逻辑探讨", options: [
+            { id: 30, text: "最后，如果你一生的原型凝练成了一件圣器，它会是：", source: "终焉逻辑探讨", options: [
                 { text: "一把剖开伪善现实的、带有血色张力的达利式软刀", type: "DALI" }, { text: "一卷记录了文明起源、永远折叠不完的深海地图", type: "SUGIMOTO" }, { text: "一个装满了晚霞与浓雾、极其静谧的人造呼吸瓶", type: "ELIASON" }, { text: "一个空无一物但外壳极其闪亮、带有红色标注的礼盒", type: "CATTELAN" }
             ]}
         ];
@@ -304,16 +304,21 @@
 
             const handleAnswer = (type, index) => {
                 if (isTransitioning) return;
+                
+                // 立即更新选中状态
                 setSelectedIdx(index);
                 setIsTransitioning(true);
+                
                 const currentHistory = { scores, currentQ };
                 const newScores = { ...scores, [type]: (scores[type] || 0) + 1 };
                 
                 setTimeout(() => {
-                    setHistory([...history, currentHistory]);
+                    setHistory(prev => [...prev, currentHistory]);
                     setScores(newScores);
+                    
                     if (currentQ < QUESTIONS.length - 1) {
-                        setCurrentQ(currentQ + 1);
+                        setCurrentQ(prev => prev + 1);
+                        // 重要：强制重置下一题的选中索引，防止残留
                         setSelectedIdx(null);
                         setIsTransitioning(false);
                         window.scrollTo({ top: 0, behavior: 'auto' });
@@ -333,7 +338,7 @@
                     const lastState = history[history.length - 1];
                     setScores(lastState.scores);
                     setCurrentQ(lastState.currentQ);
-                    setHistory(history.slice(0, -1));
+                    setHistory(prev => prev.slice(0, -1));
                     setSelectedIdx(null);
                     setIsTransitioning(false);
                     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -378,7 +383,7 @@
                 <div className="min-h-screen relative flex flex-col overflow-x-hidden">
                     {step === 'welcome' && (
                         <div className="animate-fade-in flex-grow flex flex-col items-center justify-center min-h-screen relative overflow-hidden px-6">
-                            {/* 背景：非均匀放射点阵 + Paradiso 虚线路径 */}
+                            {/* 背景：不均匀放射点阵 + Paradiso 虚线路径 */}
                             <div className="absolute inset-0 z-0 pointer-events-none">
                                 <svg width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
                                     <defs>
@@ -444,7 +449,10 @@
                     )}
 
                     {step === 'quiz' && (
-                        <div className="max-w-xl mx-auto animate-fade-in flex flex-col justify-center min-h-[100vh] md:min-h-screen relative px-8 py-4" key={currentQ}>
+                        <div 
+                            className="max-w-xl mx-auto animate-fade-in flex flex-col justify-center min-h-[100vh] md:min-h-screen relative px-8 py-4" 
+                            key={currentQ} /* 使用当前题号作为 key，强制 DOM 分支重置 */
+                        >
                             <div className="flex justify-between items-center border-b border-black/5 pb-3">
                                 <button onClick={handleBack} disabled={isTransitioning} className="text-[9px] uppercase opacity-40 hover:opacity-100 transition-all font-bold tracking-widest disabled:opacity-20 text-[#2D2A26]">BACK</button>
                                 <div className="flex items-center gap-2">
@@ -483,7 +491,7 @@
                             
                             <div className="text-center space-y-6 pt-10">
                                 <div className="text-[9px] font-mono tracking-[0.5em] text-[#9281C3] uppercase border border-[#9281C3]/20 inline-block px-4 py-1">Diagnostic Profile Complete</div>
-                                <h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-[#2D2A26] serif mt-4">{result.name}</h2>
+                                <h2 className="text-5xl md:text-8xl font-bold tracking-tighter text-[#2D2A26] serif mt-4">{result.name}</h2>
                                 <p className="text-sm text-gray-400 italic tracking-[0.5em] uppercase">{result.sub}</p>
                             </div>
 

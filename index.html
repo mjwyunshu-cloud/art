@@ -33,7 +33,7 @@
 
         .tech-header {
             border-bottom: 1px solid var(--line-color);
-            padding: 2rem 3rem;
+            padding: 1.5rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -110,7 +110,7 @@
 
         .tech-footer {
             border-top: 1px solid var(--line-color);
-            padding: 2.5rem 3rem; margin-top: 4rem;
+            padding: 2rem 3rem; 
             display: flex; justify-content: space-between;
             align-items: center; font-size: 10px;
             color: #999; font-family: var(--tech-font);
@@ -617,9 +617,9 @@
             }, [step, result]);
 
             return (
-                <div className="min-h-screen relative flex flex-col overflow-x-hidden bg-[#F8F9F5]">
+                <div className="min-h-screen relative flex flex-col bg-[#F8F9F5]">
                     {/* 技术化页眉 */}
-                    <div className="tech-header">
+                    <div className="tech-header flex-none">
                         <div>
                             <div className="tech-label font-bold">Experimental Soul Unit</div>
                             <div className="tech-sub font-mono opacity-50 uppercase tracking-widest">Classification: Art-Driven Genome V2.5</div>
@@ -718,126 +718,129 @@
                     )}
 
                     {step === 'result' && result && (
-                        <div className="max-w-5xl mx-auto animate-fade space-y-12 pb-32 relative px-8 py-12 flex-grow">
-                            <div className="text-center space-y-4">
-                                <div className="text-[10px] font-bold font-mono tracking-[0.5em] text-[#779B95] uppercase border border-[#779B95]/20 inline-block px-5 py-1.5 rounded-sm">测试档案已生成</div>
-                                <h2 className="text-5xl md:text-8xl font-bold tracking-tighter text-[#2D3A38] serif">{result.name}</h2>
-                                <p className="text-lg md:text-2xl text-gray-400 italic tracking-[0.4em] uppercase font-light">{result.sub}</p>
-                            </div>
-
-                            {/* 01: 核心分析卡片 */}
-                            <div className="bg-white border border-gray-100 relative grid md:grid-cols-5 gap-0 shadow-sm overflow-hidden">
-                                <div className="md:col-span-3 p-10 md:p-14 space-y-10 border-r border-gray-50">
-                                    <section>
-                                        <h4 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40 text-[#779B95] mb-6">01 / 知觉报告：你的审美底色</h4>
-                                        <p className="text-2xl leading-relaxed text-gray-500 italic font-medium serif mb-8">“{result.identity}”</p>
-                                        <p className="text-[15px] leading-loose text-gray-600 border-l-2 border-[#779B95]/20 pl-8 opacity-90">{result.desc}</p>
-                                    </section>
-                                    <section className="pt-8 border-t border-gray-50">
-                                        <h4 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40 text-[#779B95] mb-4">核心逻辑映射</h4>
-                                        <p className="text-[15px] leading-loose text-gray-500 italic serif">{result.logic}</p>
-                                    </section>
+                        <div className="flex-grow flex flex-col items-center justify-center py-12 px-8">
+                            <div className="max-w-5xl w-full animate-fade space-y-12 pb-20">
+                                <div className="text-center space-y-4">
+                                    <div className="text-[10px] font-bold font-mono tracking-[0.5em] text-[#779B95] uppercase border border-[#779B95]/20 inline-block px-5 py-1.5 rounded-sm">测试档案已生成</div>
+                                    <h2 className="text-5xl md:text-8xl font-bold tracking-tighter text-[#2D3A38] serif">{result.name}</h2>
+                                    <p className="text-lg md:text-2xl text-gray-400 italic tracking-[0.4em] uppercase font-light">{result.sub}</p>
                                 </div>
-                                <div className="md:col-span-2 bg-[#FBFBF9] flex flex-col items-center justify-center p-12">
-                                    <div className="w-full aspect-square relative mb-8">
-                                        <canvas ref={radarCanvas}></canvas>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="text-[10px] font-bold tracking-[0.5em] text-gray-300 font-mono">GENOME_VISUALIZATION</div>
-                                        <div className="text-[9px] text-gray-400 mt-2 font-mono opacity-50 italic uppercase">System Unit: ART_GEN_2026</div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            {/* 02 & 03: 物料清单与作品 */}
-                            <div className="grid md:grid-cols-2 gap-8">
-                                <div className="info-card flex flex-col space-y-6">
-                                    <div className="flex items-center justify-between border-b border-gray-50 pb-3">
-                                        <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40">02 / 常用介质与物料清单</h3>
-                                        <span className="text-[10px] mono opacity-20">MAT_LIST</span>
+                                {/* 01: 核心分析卡片 */}
+                                <div className="bg-white border border-gray-100 relative grid md:grid-cols-5 gap-0 shadow-sm overflow-hidden">
+                                    <div className="md:col-span-3 p-10 md:p-14 space-y-10 border-r border-gray-50">
+                                        <section>
+                                            <h4 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40 text-[#779B95] mb-6">01 / 知觉报告：你的审美底色</h4>
+                                            <p className="text-2xl leading-relaxed text-gray-500 italic font-medium serif mb-8">“{result.identity}”</p>
+                                            <p className="text-[15px] leading-loose text-gray-600 border-l-2 border-[#779B95]/20 pl-8 opacity-90">{result.desc}</p>
+                                        </section>
+                                        <section className="pt-8 border-t border-gray-50">
+                                            <h4 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40 text-[#779B95] mb-4">核心逻辑映射</h4>
+                                            <p className="text-[15px] leading-loose text-gray-500 italic serif">{result.logic}</p>
+                                        </section>
                                     </div>
-                                    <div className="flex flex-wrap gap-2">
-                                        {result.material.split('、').map((m, i) => (
-                                            <span key={i} className="tag-pill">{m}</span>
-                                        ))}
-                                    </div>
-                                    <div className="space-y-4 pt-2">
-                                        <div>
-                                            <span className="text-[9px] font-bold font-mono uppercase block mb-1 text-[#E89980]">你的心理暗影</span>
-                                            <p className="text-[12px] text-gray-500 leading-relaxed font-sans">{result.shadow}</p>
+                                    <div className="md:col-span-2 bg-[#FBFBF9] flex flex-col items-center justify-center p-12">
+                                        <div className="w-full aspect-square relative mb-8">
+                                            <canvas ref={radarCanvas}></canvas>
                                         </div>
-                                        <div>
-                                            <span className="text-[9px] font-bold font-mono uppercase block mb-1 text-[#779B95]">隐藏的焦虑点</span>
-                                            <p className="text-[12px] text-gray-500 leading-relaxed font-sans">{result.anxiety}</p>
+                                        <div className="text-center">
+                                            <div className="text-[10px] font-bold tracking-[0.5em] text-gray-300 font-mono">GENOME_VISUALIZATION</div>
+                                            <div className="text-[9px] text-gray-400 mt-2 font-mono opacity-50 italic uppercase">System Unit: ART_GEN_2026</div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="info-card flex flex-col space-y-6">
-                                    <div className="flex items-center justify-between border-b border-gray-50 pb-3">
-                                        <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40">03 / 代表性作品参考</h3>
-                                        <span className="text-[10px] mono opacity-20">WORKS</span>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <span className="text-[9px] font-bold font-mono uppercase block text-gray-400">Key Reference</span>
-                                        <div className="grid grid-cols-1 gap-3">
-                                            {result.works.map((w, i) => (
-                                                <div key={i} className="flex items-center space-x-3 text-[13px] text-gray-700">
-                                                    <div className="w-1.5 h-1.5 bg-brand-teal rounded-full"></div>
-                                                    <span className="font-bold serif">{w}</span>
-                                                </div>
+                                {/* 02 & 03: 物料清单与作品 */}
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="info-card flex flex-col space-y-6">
+                                        <div className="flex items-center justify-between border-b border-gray-50 pb-3">
+                                            <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40">02 / 常用介质与物料清单</h3>
+                                            <span className="text-[10px] mono opacity-20">MAT_LIST</span>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2">
+                                            {result.material.split('、').map((m, i) => (
+                                                <span key={i} className="tag-pill">{m}</span>
                                             ))}
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* 04: 深度阅读 */}
-                            <div className="info-card">
-                                <div className="flex items-center justify-between border-b border-gray-50 pb-4 mb-6">
-                                    <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40">04 / 想了解更多？试试这些：</h3>
-                                    <div className="flex space-x-2">
-                                        <div className="w-1.5 h-1.5 bg-brand-teal rounded-full"></div>
-                                        <div className="w-1.5 h-1.5 bg-brand-teal rounded-full opacity-30"></div>
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    {result.books.map((b, i) => (
-                                        <div key={i} className="flex items-center space-x-5 group cursor-default">
-                                            <div className="book-cover group-hover:bg-brand-teal group-hover:text-white transition-all">READ</div>
+                                        <div className="space-y-4 pt-2">
                                             <div>
-                                                <p className="text-[14px] font-bold serif text-gray-800">{b}</p>
-                                                <p className="text-[10px] font-mono text-gray-400 mt-1 uppercase tracking-widest">Recommended Reference</p>
+                                                <span className="text-[9px] font-bold font-mono uppercase block mb-1 text-[#E89980]">你的心理暗影</span>
+                                                <p className="text-[12px] text-gray-500 leading-relaxed font-sans">{result.shadow}</p>
+                                            </div>
+                                            <div>
+                                                <span className="text-[9px] font-bold font-mono uppercase block mb-1 text-[#779B95]">隐藏的焦虑点</span>
+                                                <p className="text-[12px] text-gray-500 leading-relaxed font-sans">{result.anxiety}</p>
                                             </div>
                                         </div>
-                                    ))}
-                                    <div className="md:col-span-2 p-6 bg-[#F8F9F5] rounded-sm mt-4 border-l-4 border-[#779B95]">
-                                        <div className="flex items-start space-x-4">
-                                            <div className="text-2xl text-brand-teal opacity-30 font-serif leading-none">“</div>
-                                            <p className="text-[13px] text-gray-500 italic leading-loose font-sans">
-                                                通过这次测试可以发现，你最底层的审美倾向和 {result.name} 特别像。如果你最近觉得心里有点儿堵，或者对某些事儿特别焦虑，系统建议你去多接触一下像“{result.material.split('、')[0]}”这种质感的东西，这种直接的感官刺激也许能帮你找回点儿自我的感觉。
-                                            </p>
+                                    </div>
+
+                                    <div className="info-card flex flex-col space-y-6">
+                                        <div className="flex items-center justify-between border-b border-gray-50 pb-3">
+                                            <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40">03 / 代表性作品参考</h3>
+                                            <span className="text-[10px] mono opacity-20">WORKS</span>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <span className="text-[9px] font-bold font-mono uppercase block text-gray-400">Key Reference</span>
+                                            <div className="grid grid-cols-1 gap-3">
+                                                {result.works.map((w, i) => (
+                                                    <div key={i} className="flex items-center space-x-3 text-[13px] text-gray-700">
+                                                        <div className="w-1.5 h-1.5 bg-brand-teal rounded-full"></div>
+                                                        <span className="font-bold serif">{w}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* 最后语录 */}
-                            <div className="py-24 text-center space-y-12">
-                                <div className="space-y-4">
-                                    <p className="text-4xl md:text-5xl leading-relaxed italic font-light serif text-gray-400 px-10">“{result.quote}”</p>
-                                    <div className="text-[10px] tracking-[0.8em] font-mono uppercase opacity-30">— 大师的话 —</div>
+                                {/* 04: 深度阅读 */}
+                                <div className="info-card">
+                                    <div className="flex items-center justify-between border-b border-gray-50 pb-4 mb-6">
+                                        <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.3em] opacity-40">04 / 想了解更多？试试这些：</h3>
+                                        <div className="flex space-x-2">
+                                            <div className="w-1.5 h-1.5 bg-brand-teal rounded-full"></div>
+                                            <div className="w-1.5 h-1.5 bg-brand-teal rounded-full opacity-30"></div>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        {result.books.map((b, i) => (
+                                            <div key={i} className="flex items-center space-x-5 group cursor-default">
+                                                <div className="book-cover group-hover:bg-brand-teal group-hover:text-white transition-all">READ</div>
+                                                <div>
+                                                    <p className="text-[14px] font-bold serif text-gray-800">{b}</p>
+                                                    <p className="text-[10px] font-mono text-gray-400 mt-1 uppercase tracking-widest">Recommended Reference</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        <div className="md:col-span-2 p-6 bg-[#F8F9F5] rounded-sm mt-4 border-l-4 border-[#779B95]">
+                                            <div className="flex items-start space-x-4">
+                                                <div className="text-2xl text-brand-teal opacity-30 font-serif leading-none">“</div>
+                                                <p className="text-[13px] text-gray-500 italic leading-loose font-sans">
+                                                    通过这次测试可以发现，你最底层的审美倾向和 {result.name} 特别像。如果你最近觉得心里有点儿堵，或者对某些事儿特别焦虑，系统建议你去多接触一下像“{result.material.split('、')[0]}”这种质感的东西，这种直接的感官刺激也许能帮你找回点儿自我的感觉。
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="pt-8 flex flex-col items-center space-y-4">
-                                    <button onClick={() => window.location.reload()} className="btn-action">重来一次 / RE-SCAN</button>
-                                    <p className="text-[9px] font-mono text-gray-300 opacity-50 uppercase tracking-[0.3em]">End of Diagnostic Report</p>
+
+                                {/* 最后语录 */}
+                                <div className="py-24 text-center space-y-12">
+                                    <div className="space-y-4">
+                                        <p className="text-4xl md:text-5xl leading-relaxed italic font-light serif text-gray-400 px-10">“{result.quote}”</p>
+                                        <div className="text-[10px] tracking-[0.8em] font-mono uppercase opacity-30">— 大师的话 —</div>
+                                    </div>
+                                    <div className="pt-8 flex flex-col items-center space-y-4">
+                                        <button onClick={() => window.location.reload()} className="btn-action">重来一次 / RE-SCAN</button>
+                                        <p className="text-[9px] font-mono text-gray-300 opacity-50 uppercase tracking-[0.3em]">End of Diagnostic Report</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    <div className="tech-footer">
-                        <div className="max-w-[280px] leading-relaxed opacity-60 font-sans">
+                    {/* 技术化页脚 */}
+                    <div className="tech-header border-t border-b-0 mt-auto flex-none">
+                        <div className="max-w-[280px] leading-relaxed opacity-60 font-sans lowercase">
                             “艺术不仅仅是修辞，它是你在文明废墟上重建主体性的最后存证。”
                         </div>
                         <div className="text-right">

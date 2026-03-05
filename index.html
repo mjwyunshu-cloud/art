@@ -71,7 +71,7 @@
             transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* 选项按钮：移除“框”，追求极致流畅 */
+        /* 选项按钮 */
         .option-btn {
             transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             border-bottom: 1px solid rgba(146, 129, 195, 0.15);
@@ -84,7 +84,6 @@
         }
         @media (min-width: 768px) { .option-btn { padding: 1.1rem 0; } }
         
-        /* 点击时的极简反馈，不再出现框 */
         .option-btn.selected { 
             color: var(--accent-purple);
             padding-left: 0.8rem;
@@ -160,9 +159,9 @@
             MONET: { name: "Monet / 莫奈", sub: "捕捉光线的瞬间猎手", identity: "你在变幻的光影中追逐永恒的残像。", desc: "物体本身不重要，重要的是光赋予它们的瞬间。你的一生都在捕捉那一抹转瞬即逝的空气感。", logic: "解构光谱，用细碎色块实现‘动态真实’。", material: "水汽、晨曦、吉维尼的花园。", resonance: "莫奈教我们如何真正去‘看’流动的生命。", anxiety: "对‘黑暗’的恐惧，害怕可见世界在视网膜中崩塌。", shadow: "有时陷入纯粹视觉愉悦，忽略了社会性追问。", stats: [65, 80, 95, 30, 85], quote: "我只想捕捉光投射在物体上的那一瞬间。", books: ["《莫奈：光的色彩》", "《吉维尼的花园》"] },
             PICASSO: { name: "Picasso / 毕加索", sub: "解构时空的维度魔术师", identity: "你通过破坏来建立新的宇宙法则。", desc: "你撕碎透视，将物体的多面按在同一个平面。你在审判传统的视觉逻辑，重建观察者主权。", logic: "多视角拼接，探讨图像作为‘概念’而非‘再现’的可能性。", material: "拼贴报纸、碎木片、攻击性几何线条。", resonance: "现代人的碎片化身份，正是立体主义在当代生存中的投射。", anxiety: "害怕停滞，恐惧被归类、被定义、被历史化。", shadow: "强大的征服欲给周围人带来的情感压迫。", stats: [92, 85, 60, 55, 98], quote: "每个孩子都是艺术家。", books: ["《毕加索的一生》", "《格尔尼卡》"] },
             DALI: { name: "Dalí / 达利", sub: "梦境边境的偏执狂", identity: "你用精密的写实去描绘疯狂的幻觉。", desc: "梦境才是真实的底色。现实不过是尚未融化的时钟。你在荒诞中寻找神性。", logic: "采用‘偏执狂临界状态法’，将潜意识符号进行具象化的奇观处理。", material: "融化钟表、蚂蚁、修长的象腿。", resonance: "在这个拟像包围的荒诞时代，达利的疯狂反而显得极度写实。", anxiety: "害怕平庸，试图通过制造视觉奇观来实现永恒。", shadow: "过度追求表演性与怪诞，掩盖了艺术本身的真诚探索。", stats: [95, 75, 40, 80, 85], quote: "我与疯子的唯一区别在于，我没疯。", books: ["《达利自传》", "《超现实主义宣言》"] },
-            VERMEER: { name: "Vermeer / 弗美尔", sub: "光线与沉静的几何学家", identity: "你在极小的空间里构建永恒的宁静。", desc: "你迷恋窗外的微光。神性藏在那个倒牛奶的妇人或拉琴的少女指缝间。", logic: "利用暗箱般的精密构图，制造出一种近乎静止的时间美学。", material: "群青颜料、北欧窗光、黄杨木家具。", resonance: "在喧嚣时代，这种‘极致的缓慢’是对焦虑最温柔的抚慰。", anxiety: "害怕秩序崩塌，对私密空间被外界侵入持有天然警惕。", shadow: "过度追求细部而显得格局受限。", stats: [50, 95, 98, 40, 75], quote: "光是万物存在的理由。", books: ["《弗美尔的帽子》", "《带珍珠耳环的少女》"] },
+            VERMEER: { name: "Vermeer / 弗美尔", sub: "光线与沉静的几何学家", identity: "你在极小的空间里构建永恒的宁静。", desc: "你迷恋窗外的微光。神性藏在那个倒牛奶的妇人指缝间。", logic: "利用暗箱般的精密构图与光斑叠加，制造出一种近乎静止的时间美学。", material: "群青颜料、北欧窗光、黄杨木家具。", resonance: "在喧嚣时代，这种‘极致的缓慢’是对焦虑最温柔的抚慰。", anxiety: "害怕秩序崩塌，对私密空间被外界侵入持有天然警惕。", shadow: "过度追求细部而显得格局受限。", stats: [50, 95, 98, 40, 75], quote: "光是万物存在的理由。", books: ["《弗美尔的帽子》", "《带珍珠耳环的少女》"] },
             MATISSE: { name: "Matisse / 马蒂斯", sub: "色彩与节奏的生命主义者", identity: "你用剪刀和纯色治愈文明的疲惫。", desc: "你追求‘安乐椅’式的艺术. 你卸下沉重负担，用最纯粹的色块，赞美欢愉。", logic: "追求画面绝对平衡，构建心理疗愈场，消解感官挣扎。", material: "剪纸、原色油彩、圆润线条。", resonance: "内卷生活中，欢快的色彩是人类最后的避风港。", anxiety: "害怕痛苦的直接显现，试图在画面中掩盖一切挣扎痕迹。", shadow: "缺乏批判性力量，被视为某种装饰性的妥协。", stats: [40, 85, 90, 30, 95], quote: "我想要的是平衡、纯洁和宁静。", books: ["《马蒂斯：色彩奇迹》", "《剪纸艺术》"] },
-            REMBRANDT: { name: "Rembrandt / 伦勃朗", sub: "暗影中的人性记录者", identity: "你在深沉的黑暗中寻找那一束拯救之光。", desc: "你是阴影的大师。你笔下的肖像见证个体生命在高光时刻的尊严。", logic: "利用明暗对比法，通过重色调压制背景凸显精神厚度。", material: "泥土气息、粗粝痕迹、戏剧性舞台光影。", resonance: "这种对‘平凡人神圣化’的处理，是任何时代对生命力的关怀。", anxiety: "害怕遗忘，试图在画布上存证自我作为‘人’的痕迹。", shadow: "过度自我沉溺，在众多的自画像中迷失。", stats: [85, 75, 55, 60, 92], quote: "没有光，就没有灵魂的深度。", books: ["《伦勃朗自传》", "《夜巡秘密》"] },
+            REMBRANDT: { name: "Rembrandt / 伦勃朗", sub: "暗影中的人性记录者", identity: "你在深沉的黑暗中寻找那一束拯救之光。", desc: "你是阴影的大师。你笔下的肖像见证个体尊严，在黑暗褶皱中寻找灵魂。", logic: "利用明暗对比法，通过重色调压制背景凸显精神厚度。", material: "泥土气息、粗粝痕迹、戏剧性舞台光影。", resonance: "这种对‘平凡人神圣化’的处理，是任何时代对生命力的关怀。", anxiety: "害怕遗忘，试图在画布上存证自我作为‘人’的痕迹。", shadow: "过度自我沉溺，在众多的自画像中迷失。", stats: [85, 75, 55, 60, 92], quote: "没有光，就没有灵魂的深度。", books: ["《伦勃朗自传》", "《夜巡秘密》"] },
             CARAVAGGIO: { name: "Caravaggio / 卡拉瓦乔", sub: "神圣与世俗的野蛮冲撞者", identity: "你让神走下神坛，站在布满尘土的街道上。", desc: "你是暴徒，也是圣徒. 你用近乎残忍的真实，撕开了艺术虚伪的面纱。", logic: "极端的明暗对照带来的剧场感，迫使观者面对生存残留的真实感。", material: "侧切光、原始张力肉体、深红。", resonance: "在滤镜包装的伪物时代，卡拉瓦乔式的真实具有清醒力量。", anxiety: "害怕审判。对追捕与死亡有着深刻的生理预感。", shadow: "极端的侵略性使艺术充满了某种毁灭性暴力阴影。", stats: [98, 45, 30, 70, 95], quote: "我只画我看到的东西。", books: ["《卡拉瓦乔：生与死》", "《圣马太殉难》"] },
             MICHELANGELO: { name: "Michelangelo / 米开朗基罗", sub: "石中灵魂的释放者", identity: "你在坚硬的大理石中刺探人类意志的极限。", desc: "你鑿碎禁锢，释放灵魂。你是‘英雄主义悲歌’的谱写者，用痛苦释放美。", logic: "通过扭曲肌肉展现意志抗争的‘崇高感’，将人作为神性的载体。", material: "卡拉拉大理石、凿子。", resonance: "这种悲歌提醒我们在绝望中也要奋力挣扎。", anxiety: "害怕不完美。罪孽感极其沉重，由于过度用力而处于极度焦虑。", shadow: "过度追求极致带来的压迫感，使你成为了孤独者。", stats: [95, 60, 45, 80, 100], quote: "我在大理石中看见天使。", books: ["《米开朗基罗传》", "《创世纪》"] },
             KUSAMA: { name: "Yayoi Kusama / 草间弥生", sub: "无限增殖的消融者", identity: "你在重复的韵律中寻找宇宙的锚点。", desc: "你通过‘重复’寻求救赎. 消融自我，成为无限矩阵的一份子，对抗死亡恐惧。", logic: "以单一符号无限累积占领空间，实现从心理幻觉到现实的‘自我消融’。", material: "波点、反射镜面、软雕塑。", resonance: "个体被系统淹没的生存体验是现代人最深层的共鸣。", anxiety: "害怕自我边界被虚空吞噬，对‘不连续性’持有本能恐惧。", shadow: "过度执念可能导致现实感丧失，演变为自我封闭。", stats: [98, 40, 95, 30, 80], quote: "我的生命是在数百万个点中的一个。", books: ["《无限网》", "《我在这里》"] },
@@ -170,7 +169,7 @@
             KAPOOR: { name: "Anish Kapoor / 安尼施·卡普尔", sub: "物质虚空的炼金术士", identity: "你在寻找能吞噬所有光线的纯粹深渊。", desc: "你追求极致知觉. 你是在物质世界中寻找‘非物质’缝隙的漫游者。", logic: "通过改变物体表面消除体积感，引导观者进入一种超验的觉知状态。", material: "Vantablack涂层、极深红颜料。", resonance: "在体验变轻的数字时代，你在试图夺回感官的生理重量。", anxiety: "对‘物质平庸化’的厌恶，通过极端的体量感来确证存在。", shadow: "追求极致体感可能导致作品脱离语境。", stats: [75, 65, 45, 98, 85], quote: "我一直被这种‘非物质’的力量吸引。", books: ["《利维坦》", "《非物质虚空》"] },
             RICHTER: { name: "Gerhard Richter / 格哈德·里希特", sub: "模糊现实的存档员", identity: "你在真实与虚构的重叠地带徘徊。", desc: "你警惕绝对真理. 解构历史与记忆的真相，拒绝任何固化的定义。", logic: "通过刮擦画面意识到‘不可见’的存在，探讨图像作为假象的本质。", material: "照片底图、金属刮刀、厚堆油彩。", resonance: "后真相时代，我们看到的‘真相’往往是被媒介处理过的残影。", anxiety: "对‘确定性’的怀疑，害怕艺术沦为某种煽动的工具。", shadow: "过度疏离可能让人觉得冷酷。", stats: [65, 90, 55, 75, 92], quote: "画画是为了让不可见的东西变得可见。", books: ["《阿特拉斯》", "《照片画集》"] },
             ABRAMOVIC: { name: "Marina Abramovic / 玛丽娜·阿布拉莫维奇", sub: "身体边界测试者", identity: "你用极端的意志去刺探人类情感的底线。", desc: "将肉身作为媒介，在极端的痛苦或沉默中寻找意识的升华与洗涤。", logic: "通过长时间重复行为打破表演者与观者的界限，实现精神转化。", material: "瞳孔、时间与绝对的沉默。", resonance: "在缺乏连接的社交时代，生理性的‘凝视’具有巨大冲击力。", anxiety: "对‘虚假’的强烈不适，始终在刺破隔离痛苦的保护壳。", shadow: "表演性受难有时滑向自我的神圣化，显得过于自恋。", stats: [95, 50, 40, 85, 98], quote: "艺术家必须是一面镜子。", books: ["《穿墙而过》", "《节奏系列》"] },
-            TURRELL: { name: "James Turrell / 詹姆斯·特瑞尔", sub: "光线与感知捕手", identity: "你让光线脱离实体，成为一种宗教体验。", desc: "你只用光. 光不再是照明媒介，光本身就是具有重量的实体。", logic: "利用视觉错觉引导观者进入冥想式的觉知空间，消解空间的深度。", material: "天空、特定波长光、极简空间。", resonance: "充满蓝光的喧嚣时代，那种纯粹光线洗礼提供了稀缺的宁静感。", anxiety: "害怕嘈杂干扰了纯粹观照，始终在寻找通往无限宁静的出口。", shadow: "作品门槛极高，会让普通观众感到被排斥的疏离感。", stats: [60, 85, 30, 95, 80], quote: "我的作品就是光本身。", books: ["《罗登火山口》", "《光之呼吸》"] },
+            TURRELL: { name: "James Turrell / 詹姆斯·特瑞尔", sub: "光线与感知捕手", identity: "你让光线脱离实体，成为一种宗教体验。", desc: "你只用光. 光不再是照明媒介，光本身就是具有重量的实体。", logic: "利用视觉错觉引导观者进入冥想式的觉知空间，消解空间的深度。", material: "天空、特定波长光、极简空间。", resonance: "充满蓝光的喧嚣时代，那种纯粹光线洗礼提供了稀缺的宁静感。", anxiety: "害怕嘈杂干扰了纯粹观照，始终在寻找通往无限宁静的出口。", shadow: "作品门槛极高，有时会让普通观众感到被排斥的疏离感。", stats: [60, 85, 30, 95, 80], quote: "我的作品就是光本身。", books: ["《罗登火山口》", "《光之呼吸》"] },
             BOURGEOIS: { name: "Louise Bourgeois / 路易丝·布尔乔亚", sub: "记忆创伤缝纫师", identity: "你通过巨大的蜘蛛和密室来治愈童年伤痕。", desc: "那些蜘蛛其实都是你在缝合破碎的记忆。你在大理石中刺探痛苦。", logic: "将私密禁忌经验转化为压迫感装置，实现视觉上的心理分析。", material: "青铜蜘蛛、缝衣针、旧衣物。", resonance: "在焦虑横行的时代，你展示了如何与原生家庭的‘蜘蛛’共处。", anxiety: "对‘遗弃’的恐惧，对安全性持有近乎偏执的索求。", shadow: "过度沉溺过去可能阻碍自我的向前。", stats: [95, 60, 85, 75, 80], quote: "艺术是理智的保证。", books: ["《蜘蛛》", "《破坏性父亲》"] },
             ELIASON: { name: "Olafur Eliasson / 奥拉维尔·埃利亚松", sub: "生态气象实验室", identity: "你在展厅里制造太阳，唤醒人类对自然的共感。", desc: "参与. 将雾气和彩虹带进美术馆，让人重新感受自然界原始的流动。", logic: "模拟庞大自然现象，迫使观者重新审视人与自然的共生关系。", material: "单色钠光灯、循环水、冰川碎块。", resonance: "全球变暖不再是枯燥数据，而是生理性的‘警示艺术’。", anxiety: "对‘生态坍塌’的危机感，害怕丧失对自然界的情感能力。", shadow: "高度技术依赖掩盖审美逻辑。", stats: [75, 90, 50, 85, 85], quote: "艺术是世界的一面透镜。", books: ["《天气计划》", "《现实中介》"] },
             CATTELAN: { name: "Maurizio Cattelan / 莫瑞吉奥·卡特兰", sub: "神圣权威戏仿者", identity: "你用胶带和香蕉来挑战艺术市场的荒唐价值。", desc: "你用恶搞的幽默感嘲讽自命不凡的美术馆. 让荒唐的事变得理所当然。", logic: "通过语境置换探讨‘意义’在当代社会的廉价性，消解神圣意象。", material: "强力胶带、标本、纯金马桶。", resonance: "在解构时代，你的嘲讽是对荒诞世界最好的回击。", anxiety: "对‘意义’本身虚无性的恐惧。试图通过破坏寻找真实的尴尬。", shadow: "无休止的恶作剧容易被简化为吸睛的商业博主。", stats: [85, 75, 30, 70, 60], quote: "我只是一个图像的搬运工。", books: ["《喜剧演员》", "《第九小时》"] },
@@ -239,7 +238,7 @@
                 { text: "解剖结构完美、挑战自然规律的鸟", type: "DA_VINCI" }, { text: "全身长满波点、不停增殖的巨型猫", type: "KUSAMA" }, { text: "透明、能看到血液流动的巨蛛", type: "BOURGEOIS" }, { text: "甲醛中凝固了最静止瞬间的蝴蝶", type: "HIRST" }
             ]},
             { id: 21, text: "最后，如果你一生的执念凝练成圣器：", phase: "ULTIMATE_NARRATIVE", options: [
-                { text: "一把剖开伪善现实的达利式软刀", type: "DALI" }, { text: "一卷永远折叠不完的深海地图", type: "SUGIMOTO" }, { text: "装满了晚霞与浓雾的静谧呼吸瓶", type: "ELIASON" }, { text: "一个空无一物但外壳闪亮的礼盒", type: "CATTELAN" }
+                { text: "一把剖开伪善现实的达利式软刀", type: "DALI" }, { text: "一卷永远折叠不完的深海地图", type: "SUGIMOTO" }, { text: "装满了晚霞与浓雾的静谧呼吸瓶", type: "ELIASON" }, { text: "一个空无一物但外壳极其闪亮的礼盒", type: "CATTELAN" }
             ]},
             { id: 22, text: "你更偏向于在废墟中：", options: [{ text: "寻找文明曾活过的细小信物", type: "BOURGEOIS" }, { text: "感叹万物在时间长河中的消解", type: "SUGIMOTO" }] },
             { id: 23, text: "你认为“真实”是：", options: [{ text: "肮脏、平凡且有颗粒感的街道", type: "CARAVAGGIO" }, { text: "被层层涂抹后依然看不透的残影", type: "RICHTER" }] },
@@ -292,7 +291,6 @@
             const handleAnswer = (type, index, e) => {
                 if (isTransitioning) return;
                 
-                // 1. 意料之外的反馈：极速点阵引力
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = (rect.left + rect.width / 2) / window.innerWidth * 1000;
                 const y = (rect.top + rect.height / 2) / window.innerHeight * 1000;
@@ -304,14 +302,12 @@
                     opacity: 0.7
                 })));
 
-                // 2. 状态诊断文字
                 const logs = ["SCANNING...", "MAPPING...", "CAPTURING...", "FLOWING..."];
                 setStatusLog(logs[Math.floor(Math.random() * logs.length)]);
                 
                 setSelectedIdx(index);
                 setIsTransitioning(true);
                 
-                // 压缩延迟：点击后几乎立即开始切题
                 setTimeout(() => {
                     setIsFadeEffect(true);
                     
@@ -334,7 +330,7 @@
                             setStep('result');
                             window.scrollTo({ top: 0, behavior: 'auto' });
                         }
-                    }, 150); // 极速切换周期 150ms
+                    }, 150); 
                 }, 50); 
             };
 
@@ -363,7 +359,7 @@
                                 data: result.stats,
                                 backgroundColor: 'rgba(146, 129, 195, 0.1)',
                                 borderColor: '#9281C3',
-                                borderWidth: 2,
+                                borderWidth: 1.5,
                                 pointRadius: 0,
                             }]
                         },
@@ -374,7 +370,7 @@
                                     grid: { color: 'rgba(0,0,0,0.05)' },
                                     ticks: { display: false },
                                     min: 0, max: 100,
-                                    pointLabels: { font: { family: "'Noto Serif SC', serif", size: 10 }, color: '#5B4D8A' }
+                                    pointLabels: { font: { family: "'Noto Serif SC', serif", size: 9 }, color: '#5B4D8A' }
                                 }
                             },
                             plugins: { legend: { display: false } }
@@ -491,82 +487,93 @@
                     )}
 
                     {step === 'result' && result && (
-                        <div className="max-w-4xl mx-auto animate-fade-in space-y-16 pb-32 relative px-8 py-20 flex-grow">
+                        <div className="max-w-3xl mx-auto animate-fade-in space-y-12 pb-32 relative px-8 py-16 flex-grow">
                             <div className="absolute top-0 left-0 w-full h-[1px] opacity-10 bg-[#9281C3]"></div>
-                            <div className="text-center space-y-6 pt-10">
+                            
+                            <div className="text-center space-y-4 pt-10">
                                 <div className="text-[9px] font-mono tracking-[0.5em] text-[#9281C3] uppercase border border-[#9281C3]/20 inline-block px-4 py-1">Diagnostic Profile Finalized</div>
-                                <h2 className="text-6xl md:text-8xl font-bold tracking-tighter text-[#2D2A26] serif mt-4">{result.name}</h2>
-                                <p className="text-sm text-gray-400 italic tracking-[0.5em] uppercase">{result.sub}</p>
-                                <div className="text-[9px] font-mono text-gray-400 mt-2 uppercase tracking-widest">
-                                    GENE_SEQ: {geneCode} / SYNC: 99.8%
+                                <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-[#2D2A26] serif mt-2">{result.name}</h2>
+                                <p className="text-[12px] text-gray-400 italic tracking-[0.4em] uppercase">{result.sub}</p>
+                                <div className="text-[8px] font-mono text-gray-400 mt-2 uppercase tracking-widest opacity-60">
+                                    GENE_SEQ: {geneCode} / SYNC_RATIO: 99.8%
                                 </div>
                             </div>
 
-                            <div className="bg-white/50 border border-black/5 relative grid md:grid-cols-2 gap-10 items-center p-10 sm:p-16 shadow-sm">
-                                <div className="space-y-8 text-left">
-                                    <div className="space-y-3">
-                                        <h4 className="text-[12px] font-bold uppercase tracking-[0.4em] text-[#9281C3] flex items-center gap-3">
+                            <div className="bg-white/50 border border-black/5 relative grid md:grid-cols-2 gap-8 items-center p-8 sm:p-12 shadow-sm rounded-sm">
+                                <div className="space-y-6 text-left">
+                                    <div className="space-y-2">
+                                        <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#9281C3] flex items-center gap-3">
                                             精神底色报告 / ANALYSIS
                                         </h4>
-                                        <p className="text-[17px] leading-relaxed text-gray-500 italic font-medium serif">“{result.identity}”</p>
+                                        <p className="text-[15px] leading-relaxed text-gray-500 italic font-medium serif">“{result.identity}”</p>
                                     </div>
-                                    <p className="text-[17px] leading-relaxed text-[#2D2A26] border-l-2 border-black/5 pl-6">{result.desc}</p>
+                                    <p className="text-[14px] leading-relaxed text-[#2D2A26] border-l border-black/5 pl-4 opacity-80">{result.desc}</p>
                                 </div>
-                                <div className="aspect-square relative flex items-center justify-center p-6 border border-black/5 max-w-[220px] mx-auto w-full">
+                                <div className="aspect-square relative flex items-center justify-center p-4 border border-black/5 max-w-[180px] mx-auto w-full">
                                     <canvas ref={radarCanvas}></canvas>
                                 </div>
                             </div>
 
-                            <div className="space-y-20">
-                                <section className="space-y-6 text-left">
-                                    <div className="flex items-center justify-between border-b border-black/5 pb-3">
-                                        <h3 className="text-[13px] font-bold uppercase tracking-[0.4em] text-gray-400">执念逻辑映射 / Logic Mapping</h3>
+                            <div className="space-y-16">
+                                <section className="space-y-4 text-left">
+                                    <div className="flex items-center justify-between border-b border-black/5 pb-2">
+                                        <h3 className="text-[11px] font-bold uppercase tracking-[0.4em] text-gray-400">执念逻辑映射 / Logic Mapping</h3>
                                         <span className="text-[10px] font-mono text-[#9281C3]">02</span>
                                     </div>
-                                    <div className="p-4 bg-white/30 border-l border-black/10 shadow-sm">
-                                        <p className="text-[19px] leading-relaxed text-[#2D2A26] italic font-medium serif">{result.logic}</p>
+                                    <div className="p-4 bg-white/20 border-l-2 border-[#9281C3]/30">
+                                        <p className="text-[16px] leading-relaxed text-[#2D2A26] italic font-medium serif">{result.logic}</p>
                                     </div>
                                 </section>
 
-                                <section className="space-y-6 text-left">
-                                    <div className="flex items-center justify-between border-b border-black/5 pb-3">
-                                        <h3 className="text-[13px] font-bold uppercase tracking-[0.4em] text-gray-400">感官兼容性诊断 / Compatibility</h3>
+                                <section className="space-y-4 text-left">
+                                    <div className="flex items-center justify-between border-b border-black/5 pb-2">
+                                        <h3 className="text-[11px] font-bold uppercase tracking-[0.4em] text-gray-400">物质场域与技法 / Materiality & Field</h3>
                                         <span className="text-[10px] font-mono text-gray-300">03</span>
                                     </div>
+                                    <div className="p-4">
+                                        <p className="text-[15px] leading-relaxed text-[#2D2A26] opacity-70 serif">{result.material}</p>
+                                    </div>
+                                </section>
+
+                                <section className="space-y-4 text-left">
+                                    <div className="flex items-center justify-between border-b border-black/5 pb-2">
+                                        <h3 className="text-[11px] font-bold uppercase tracking-[0.4em] text-gray-400">感官兼容性诊断 / Compatibility</h3>
+                                        <span className="text-[10px] font-mono text-gray-300">04</span>
+                                    </div>
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="p-4 bg-[#76C893]/10 border border-[#76C893]/20">
-                                            <span className="text-[10px] font-bold uppercase block mb-2 text-[#76C893]">完美重合 / Synced</span>
-                                            <p className="text-[10px] opacity-70">你的灵魂采样与 {result.name.split('/')[1]} 的深层结构重合度达 98.4%。</p>
+                                        <div className="p-4 bg-[#76C893]/5 border border-[#76C893]/10">
+                                            <span className="text-[9px] font-bold uppercase block mb-1 text-[#76C893]">完美重合 / Synced</span>
+                                            <p className="text-[10px] opacity-60 leading-tight">你的灵魂采样与 {result.name.split('/')[1]} 的深层结构重合度达 98.4%。</p>
                                         </div>
-                                        <div className="p-4 bg-[#D62828]/10 border border-[#D62828]/20">
-                                            <span className="text-[10px] font-bold uppercase block mb-2 text-[#D62828]">感知抵触 / Conflict</span>
-                                            <p className="text-[10px] opacity-70">你对 卡特兰 的解构主义表达持天然警惕态度。</p>
+                                        <div className="p-4 bg-[#D62828]/5 border border-[#D62828]/10">
+                                            <span className="text-[9px] font-bold uppercase block mb-1 text-[#D62828]">感知抵触 / Conflict</span>
+                                            <p className="text-[10px] opacity-60 leading-tight">你对 卡特兰 的解构主义表达持天然警惕态度。</p>
                                         </div>
                                     </div>
                                 </section>
                             </div>
 
-                            <div className="p-20 bg-[#2D2A26] text-[#FDFBF7] text-center shadow-2xl relative overflow-hidden group rounded-sm">
-                                <p className="text-3xl md:text-5xl leading-relaxed mb-8 italic font-light relative z-10 serif">
+                            <div className="p-12 md:p-16 bg-[#2D2A26] text-[#FDFBF7] text-center shadow-2xl relative overflow-hidden group rounded-sm">
+                                <p className="text-2xl md:text-4xl leading-relaxed mb-6 italic font-light relative z-10 serif">
                                     <span className="relative z-10">“{result.quote}”</span>
                                 </p>
-                                <div className="text-[11px] text-[#9281C3] tracking-[1em] uppercase font-bold relative z-10">— 大师给你的最后真言 —</div>
+                                <div className="text-[9px] text-[#9281C3] tracking-[0.8em] uppercase font-bold relative z-10">— 大师给你的最后真言 —</div>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/5">
-                                <div className="p-14 bg-[#FDFBF7]">
-                                    <div className="text-[11px] font-bold mb-4 uppercase tracking-[0.4em] text-[#9281C3] font-sans">核心焦虑诊断 / ANXIETY</div>
-                                    <div className="text-[16px] text-gray-600 leading-relaxed serif">{result.anxiety}</div>
+                                <div className="p-10 bg-[#FDFBF7]/80 backdrop-blur-sm">
+                                    <div className="text-[10px] font-bold mb-3 uppercase tracking-[0.4em] text-[#9281C3] font-sans">核心焦虑诊断 / ANXIETY</div>
+                                    <div className="text-[14px] text-gray-600 leading-relaxed serif opacity-90">{result.anxiety}</div>
                                 </div>
-                                <div className="p-14 bg-[#FDFBF7]">
-                                    <div className="text-[11px] font-bold mb-4 uppercase tracking-[0.4em] text-gray-400 font-sans">系统阴影分析 / SHADOW</div>
-                                    <div className="text-[15px] text-gray-700 leading-relaxed serif">{result.shadow}</div>
+                                <div className="p-10 bg-[#FDFBF7]/80 backdrop-blur-sm">
+                                    <div className="text-[10px] font-bold mb-3 uppercase tracking-[0.4em] text-gray-400 font-sans">系统阴影分析 / SHADOW</div>
+                                    <div className="text-[14px] text-gray-700 leading-relaxed serif opacity-90">{result.shadow}</div>
                                 </div>
                             </div>
 
-                            <div className="pt-24 flex flex-col gap-6 items-center">
-                                <button onClick={() => window.location.reload()} className="px-14 py-7 border border-black/40 text-[12px] font-bold tracking-[0.7em] uppercase hover:bg-[#9281C3] hover:text-white transition-all shadow-xl active:scale-95">再次重塑原型 / RESTART</button>
-                                <p className="text-[9px] text-center text-gray-400 tracking-[0.6em] uppercase opacity-60 font-mono">© 2026 Art Prototype Project by @Emergence_Lab</p>
+                            <div className="pt-20 flex flex-col gap-6 items-center">
+                                <button onClick={() => window.location.reload()} className="px-10 py-5 border border-black/20 text-[10px] font-bold tracking-[0.6em] uppercase hover:bg-[#9281C3] hover:text-white transition-all shadow-xl active:scale-95">再次重塑原型 / RESTART</button>
+                                <p className="text-[8px] text-center text-gray-400 tracking-[0.4em] uppercase opacity-40 font-mono">© 2026 Art Prototype Project by @Emergence_Lab</p>
                             </div>
                         </div>
                     )}

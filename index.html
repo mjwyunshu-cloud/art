@@ -79,27 +79,33 @@
             opacity: 0.3;
         }
 
-        /* 选项按钮：极致极简 */
+        /* 选项按钮：极致极简与移动端适配 */
         .option-btn {
             transition: all 0.3s ease;
             border-bottom: 1px solid rgba(0,0,0,0.06);
             text-align: left;
-            padding: 1.8rem 0;
+            padding: 1rem 0; /* 移动端默认较小的间距 */
             width: 100%;
             outline: none;
             background: transparent;
         }
 
+        @media (min-width: 768px) {
+            .option-btn {
+                padding: 1.8rem 0; /* 平板及电脑保持大间距 */
+            }
+        }
+
         .option-btn:hover {
             background: rgba(214, 40, 40, 0.02);
-            padding-left: 2rem;
+            padding-left: 1.5rem;
             border-bottom-color: var(--accent-red);
         }
 
         .option-btn.selected {
             background-color: rgba(214, 40, 40, 0.08);
             border-bottom: 1px solid var(--accent-red);
-            padding-left: 2rem;
+            padding-left: 1.5rem;
             transform: scale(0.99);
         }
 
@@ -141,30 +147,30 @@
         const { useState, useEffect, useRef } = React;
 
         const ARTISTS = {
-            DA_VINCI: { name: "Da Vinci / 达·芬奇", sub: "全知全能的理性圣徒", identity: "你在严密的观察中拆解自然与神性的比例。", desc: "艺术对你而言是精密科学。你试图用解剖刀和几何尺去测量灵魂的轮廓，在理性的巅峰处俯瞰感官世界。", logic: "利用‘渐隐法’模糊物质边界，将客观实证与神圣秩序通过数学比例完美咬合。", material: "胡桃木板、手绘稿。你迷恋能够被公式量化的生理结构。", resonance: "在算法统治的当代，这种‘通才渴望’是抵抗碎片化的良药。", anxiety: "害怕知识的边界，追求全知却时刻受限于人类生理感官的局限。", shadow: "过度逻辑导致情感冷缩，陷入‘未完成’的强迫症循环。", stats: [90, 100, 70, 50, 95], quote: "简单是终极的复杂。", books: ["《达·芬奇笔记》", "《哈默手稿》"] },
+            DA_VINCI: { name: "Da Vinci / 达·芬奇", sub: "全知全能的理性圣徒", identity: "你在严密的观察中拆解自然与神性的比例。", desc: "艺术对你而言是精密科学。你试图用解剖刀和几何尺去测量灵魂的轮廓，在理性的巅峰处俯瞰感官世界。", logic: "利用‘渐隐法’模糊物质边界，将客观实证与神圣秩序通过数学比例完美咬合。", material: "胡桃木板、手绘稿。你迷恋能够被公式量化的生理结构。", resonance: "在算法统治的当代，这种‘通才渴望’是抵抗信息碎片化的最后尊严。", anxiety: "害怕知识的边界，追求全知却时刻受限于人类生理感官的局限。", shadow: "过度逻辑导致情感冷缩，陷入‘未完成’的强迫症循环。", stats: [90, 100, 70, 50, 95], quote: "简单是终极的复杂。", books: ["《达·芬奇笔记》", "《哈默手稿》"] },
             VAN_GOGH: { name: "Van Gogh / 梵高", sub: "燃烧生命的表现主义者", identity: "你用旋转的笔触对抗内心的深渊。", desc: "你拒绝客观描摹，只服从情感洪流。你眼中的世界都在震颤，那是灵魂被高度挤压后的爆发。", logic: "以厚涂法赋予色彩物质重量感，通过色彩冲突制造近乎眩晕的视觉张力。", material: "厚重油彩、带有体温的笔触。你认为颜料本身就是流动的血液。", resonance: "在标准化的工业社会，这种‘自焚式’的真诚具有击穿防御的野蛮力量。", anxiety: "被世界遗弃的恐惧，对无法实现‘真实连接’的孤独持有生理性剧痛。", shadow: "过度敏锐导致精神过载，容易陷入毁灭性的自我消耗。", stats: [98, 30, 85, 40, 95], quote: "我越是感到平凡，我就越是渴望创造。", books: ["《梵高传》", "《亲爱的提奥》"] },
-            MONET: { name: "Monet / 莫奈", sub: "捕捉光线的瞬间猎手", identity: "你在变幻的光影中追逐永恒的残像。", desc: "物体本身不重要，重要的是光赋予它们的瞬时性。你的一生都在捕捉那一抹空气感。", logic: "解构光谱，用细碎色块取代线条，实现由大脑合成的‘动态真实’。", material: "写生、波光质感。你迷恋水汽与光线交织出的那种朦胧的‘瞬间性’。", resonance: "莫奈教我们如何真正去‘看’——去看流动的生命，而非固化的身份标签。", anxiety: "对‘黑暗’的恐惧，害怕可见世界的秩序在视网膜中崩塌。", shadow: "有时陷入纯粹的视觉愉悦，忽略了深层的社会性追问。", stats: [65, 80, 95, 30, 85], quote: "我只想捕捉光投射在物体上的那一瞬间。", books: ["《莫奈：光的色彩》", "《吉维尼的花园》"] },
+            MONET: { name: "Monet / 莫奈", sub: "捕捉光线的瞬间猎手", identity: "你在变幻的光影中追逐永恒的残像。", desc: "物体本身不重要，重要的是光赋予它们的瞬时性。你的一生都在捕捉那一抹转瞬即逝的空气感。", logic: "解构光谱，用细碎色块取代线条，实现由大脑合成的‘动态真实’。", material: "写生、波光质感。你迷恋水汽与光线交织出的那种朦胧的‘瞬间性’。", resonance: "莫奈教我们如何真正去‘看’——去看流动的生命，而非固化的身份标签。", anxiety: "对‘黑暗’的恐惧，害怕可见世界的秩序在视网膜中崩塌。", shadow: "有时陷入纯粹的视觉愉悦，忽略了深层的社会性追问。", stats: [65, 80, 95, 30, 85], quote: "我只想捕捉光投射在物体上的那一瞬间。", books: ["《莫奈：光的色彩》", "《吉维尼的花园》"] },
             PICASSO: { name: "Picasso / 毕加索", sub: "解构时空的维度魔术师", identity: "你通过破坏来建立新的宇宙法则。", desc: "你撕碎透视，将物体的多面按在同一个平面。你在审判传统的视觉逻辑，重建观察者主权。", logic: "多视角拼接，打破单一时空维度，探讨图像作为‘概念’而非‘再现’的可能性。", material: "拼贴、几何化线条。你认为破坏就是创造的起点。", resonance: "现代人的多线程生活与碎片化身份，正是立体主义在当代生存状态中的投射。", anxiety: "害怕平庸带来的‘停滞’，恐惧被归类、被定义、被历史化。", shadow: "强大的征服欲与多变人格，往往给周围人带来情感压迫。", stats: [92, 85, 60, 55, 98], quote: "每个孩子都是艺术家。", books: ["《毕加索的一生》", "《格尔尼卡》"] },
             DALI: { name: "Dalí / 达利", sub: "梦境边境的偏执狂", identity: "你用精密的写实去描绘疯狂的幻觉。", desc: "梦境才是真实的底色。现实不过是尚未融化的时钟。你在荒诞中寻找神性。", logic: "将潜意识符号进行极度具象化的奇观处理，模糊虚实界限。", material: "融化的时钟、蚂蚁。你迷恋那种具有‘超现实’质感的细节。", resonance: "在这个被拟像包围的荒诞时代，达利的疯狂呈现出某种极致的写实感。", anxiety: "害怕被平庸吞噬，试图通过制造视觉奇观来实现永恒。", shadow: "过度追求表演性与怪诞，有时会掩盖艺术本身的真诚探索。", stats: [95, 75, 40, 80, 85], quote: "我与疯子的唯一区别在于，我没疯。", books: ["《达利自传》", "《超现实主义宣言》"] },
-            VERMEER: { name: "Vermeer / 弗美尔", sub: "光线与沉静的几何学家", identity: "你在极小的空间里构建永恒的宁静。", desc: "你迷恋窗外的微光。神性不在宏大叙事中，而藏在日常瞬间的指缝间。", logic: "利用暗箱般的精密构图与光斑叠加，制造出一种近乎静止的时间美学。", material: "北欧窗光、黄杨木。你追求极致的、带有神圣感的室内寂静。", resonance: "在喧嚣时代，这种‘极致的缓慢’是对现代焦虑最温柔的抚慰。", anxiety: "害怕秩序崩塌，对私密空间被外界侵入持有防御本能。", shadow: "格局受限，有时陷入一种带有窒息感的静态封闭。", stats: [50, 95, 98, 40, 75], quote: "光是万物存在的理由。", books: ["《弗美尔的帽子》", "《带珍珠耳环的少女》"] },
-            MATISSE: { name: "Matisse / 马蒂斯", sub: "色彩与节奏的生命主义者", identity: "你用剪刀和纯色治愈文明的疲惫。", desc: "你追求‘安乐椅’式的艺术。你卸下沉重负担，用最纯粹的色块，赞美欢愉。", logic: "色彩极致简化，追求画面绝对平衡，构建心理疗愈场，消解挣扎。", material: "彩色剪纸、原色。你认为艺术应该是对精神的一种纯净按摩。", resonance: "内卷生活中，欢快的色彩是人类最后的避风港。", anxiety: "害怕痛苦的直接显现，试图在画面中掩盖一切挣扎生命痕迹。", shadow: "缺乏批判性力量，有时被视为某种对现实痛苦的装饰性妥协。", stats: [40, 85, 90, 30, 95], quote: "我想要的是平衡、纯洁和宁静。", books: ["《马蒂斯：色彩奇迹》", "《剪纸艺术》"] },
+            VERMEER: { name: "Vermeer / 弗美尔", sub: "光线与沉静的几何学家", identity: "你在极小的空间里构建永恒的宁静。", desc: "你迷恋窗外的微光。神性不在远方，就藏在那个倒牛奶的妇人或拉琴的少女指缝间。", logic: "利用暗箱般的精密构图与光斑叠加，制造出一种近乎静止的时间美学。", material: "北欧窗光、黄杨木。你追求极致的、带有神圣感的室内寂静。", resonance: "在喧嚣时代，这种‘极致的缓慢’是对现代焦虑最温柔的抚慰。", anxiety: "害怕秩序崩塌，对私密空间被外界侵入持有防御本能。", shadow: "格局受限，有时陷入一种带有窒息感的静态封闭。", stats: [50, 95, 98, 40, 75], quote: "光是万物存在的理由。", books: ["《弗美尔的帽子》", "《带珍珠耳环的少女》"] },
+            MATISSE: { name: "Matisse / 马蒂斯", sub: "色彩与节奏的生命主义者", identity: "你用剪刀和纯色治愈文明的疲惫。", desc: "你追求‘安乐椅’式的艺术. 你卸下沉重负担，用最纯粹的色块，赞美欢愉。", logic: "色彩极致简化，追求画面绝对平衡，构建心理疗愈场，消解挣扎。", material: "彩色剪纸、原色. 你认为艺术应该是对精神的一种纯净按摩。", resonance: "内卷生活中，欢快的色彩是人类最后的避风港。", anxiety: "害怕痛苦的直接显现，试图在画面中掩盖一切挣扎生命痕迹。", shadow: "缺乏批判性力量，有时被视为某种对现实痛苦的装饰性妥协。", stats: [40, 85, 90, 30, 95], quote: "我想要的是平衡、纯洁和宁静。", books: ["《马蒂斯：色彩奇迹》", "《剪纸艺术》"] },
             REMBRANDT: { name: "Rembrandt / 伦勃朗", sub: "暗影中的人性记录者", identity: "你在深沉的黑暗中寻找那一束拯救之光。", desc: "你是阴影的大师。你笔下的肖像见证个体尊严，在黑暗褶皱中寻找灵魂。", logic: "利用‘明暗对比法’压制背景，凸显主体人物的精神厚度与历史感。", material: "粗粝痕迹、戏剧性舞台光影。你迷恋具有厚度的岁月质感。", resonance: "这种对‘平凡人神圣化’的处理，是任何时代对生命力的关怀。", anxiety: "害怕遗忘与精神破产，试图在画布上存证自我的存在痕迹。", shadow: "过度自我沉溺，在众多的自画像中迷失于苍凉境遇。", stats: [85, 75, 55, 60, 92], quote: "没有光，就没有灵魂的深度。", books: ["《伦勃朗自传》", "《夜巡秘密》"] },
             CARAVAGGIO: { name: "Caravaggio / 卡拉瓦乔", sub: "神圣与世俗的野蛮冲撞者", identity: "你让神走下神坛，站在布满尘土的街道上。", desc: "你是暴徒，也是圣徒. 你用近乎残忍的真实，呈现肉体最原始的张力。", logic: "极端的明暗对照带来的剧场感，迫使观者面对生存的残酷性。", material: "侧切聚光灯。你认为真理就藏在那些肮脏且真实的细节里。", resonance: "在滤镜包装的伪物时代，卡拉瓦乔式的真实具有清醒的野蛮力量。", anxiety: "害怕审判。对追捕与死亡有着深刻的生理预感。", shadow: "极端的侵略性与不稳定性，使艺术充满了某种毁灭性暴力阴影。", stats: [98, 45, 30, 70, 95], quote: "我只画我看到的东西。", books: ["《卡拉瓦乔：生与死》", "《圣马太殉难》"] },
-            MICHELANGELO: { name: "Michelangelo / 米开朗基罗", sub: "石中灵魂的释放者", identity: "你在坚硬的大理石中刺探人类意志的极限。", desc: "你凿碎禁锢，释放灵魂。你是‘英雄主义悲歌’的谱写者，用痛苦释放美。", logic: "通过扭曲肌肉展现意志抗争的‘崇高感’，将人作为神性的载体。", material: "卡拉拉大理石、凿子。你迷恋那种处于张力极限的形态。", resonance: "这种英雄主义悲歌提醒我们在绝望中也要奋力挣扎。", anxiety: "害怕不完美。由于过度用力而处于极度焦虑。", shadow: "过度追求极致带来的压迫感，使你成为了一个伟大的孤独者。", stats: [95, 60, 45, 80, 100], quote: "我在大理石中看见天使。", books: ["《米开朗基罗传》", "《创世纪》"] },
-            KUSAMA: { name: "Yayoi Kusama / 草间弥生", sub: "无限增殖的消融者", identity: "你在重复的韵律中寻找宇宙的锚点。", desc: "你通过‘重复’寻求救赎。消融自我，成为无限矩阵的一份子，对抗恐惧。", logic: "以单一符号无限累积占领空间，实现从心理幻觉到现实的‘自我消融’。", material: "波点、反射镜面。你认为单一圆点是连接宇宙的最小单位。", resonance: "个体被系统淹没的生存体验是现代人最深层的共鸣。", anxiety: "害怕自我边界被虚空吞噬，对‘不连续性’持有本能恐惧。", shadow: "过度执念可能导致现实感丧失，演变为病理性的自我封闭。", stats: [98, 40, 95, 30, 80], quote: "我的生命是在数百万个点中的一个。", books: ["《无限网》", "《我在这里》"] },
-            HIRST: { name: "Damien Hirst / 达明安·赫斯特", sub: "死亡实验室的系统员", identity: "你试图用秩序和甲醛来对冲生命的不确定性。", desc: "你迷恋分类。在冷冰冰的理性框架中审视生命的脆弱与科学的局限。", logic: "将死亡工业化静态固定，探讨信仰、科学与资本之间的权力博弈。", material: "福尔马林、药丸矩阵。你迷恋那种剥离情感的、冷酷的秩序感。", resonance: "在生物技术时代，我们的生命是否正被某种隐形规则分类？", anxiety: "对‘肉体腐败’的本能恐惧。通过极度控制来抵御生命的失效。", shadow: "理性掩盖了情感贫瘠，使艺术沦为某种带有投机性质的游戏。", stats: [85, 95, 60, 75, 50], quote: "艺术是为了解释生命。", books: ["《为了上帝之爱》", "《难以置信的珍宝》"] },
-            KAPOOR: { name: "Anish Kapoor / 安尼施·卡普尔", sub: "物质虚空的炼金术士", identity: "你在寻找能吞噬所有光线的纯粹深渊。", desc: "你追求极致知觉。你是在物质世界中寻找‘非物质’缝隙的漫游者。", logic: "通过改变物体表面消除体积感，引导观者进入一种超验的觉知状态。", material: "Vantablack涂层、极深红颜料。你追求刺痛视网膜的纯粹度。", resonance: "在体验变轻的数字时代，你在试图夺回感官的生理重量。", anxiety: "对‘物质平庸化’的厌恶，通过极端的体量感来确证存在。", shadow: "追求极致体感可能导致作品脱离语境，成为纯粹的感官神话。", stats: [75, 65, 45, 98, 85], quote: "我一直被这种‘非物质’的力量吸引。", books: ["《利维坦》", "《非物质虚空》"] },
-            RICHTER: { name: "Gerhard Richter / 格哈德·里希特", sub: "模糊现实的存档员", identity: "你在真实与虚构的重叠地带徘徊。", desc: "你警惕绝对真理。解构历史与记忆的真相，拒绝任何固化的定义。", logic: "通过刮擦画面意识到‘不可见’的存在，探讨图像作为假象的本质。", material: "模糊的照片底图、金属刮刀。你拒绝被任何风格所固定。", resonance: "后真相时代，我们看到的‘真相’往往是被媒介处理过的残影。", anxiety: "对‘确定性’的怀疑，害怕艺术沦为某种煽动的工具。", shadow: "过度疏离可能让人觉得冷酷，陷入一种虚无主义的循环。", stats: [65, 90, 55, 75, 92], quote: "画画是为了让不可见的东西变得可见。", books: ["《阿特拉斯》", "《照片画集》"] },
-            ABRAMOVIC: { name: "Marina Abramovic / 玛丽娜·阿布拉莫维奇", sub: "身体边界测试者", identity: "你用极端的意志去刺探人类情感的底线。", desc: "将肉身作为媒介，在极端的痛苦或沉默中寻找意识的升华与洗涤。", logic: "通过长时间重复行为打破表演者与观者的界限，实现精神转化。", material: "瞳孔、时间与绝对的沉默。你认为时间是艺术最核心的物质。", resonance: "在缺乏连接的社交时代，生理性的‘凝视’具有巨大冲击力。", anxiety: "对‘虚假’的强烈不适，始终在刺破隔离痛苦的保护壳。", shadow: "表演性受难有时滑向自我的神圣化，显得过于自恋。", stats: [95, 50, 40, 85, 98], quote: "艺术家必须是一面镜子。", books: ["《穿墙而过》", "《节奏系列》"] },
-            TURRELL: { name: "James Turrell / 詹姆斯·特瑞尔", sub: "光线与感知捕手", identity: "你让光线脱离实体，成为一种宗教体验。", desc: "你只用光。光不再是照明媒介，光本身就是具有重量的实体。", logic: "利用视觉错觉引导观者进入冥想式的觉知空间，消解空间的深度。", material: "天空、特定波长光。你追求的是感官的绝对纯净度。", resonance: "充满蓝光的喧嚣时代，那种纯粹光线洗礼提供了稀缺的宁静感。", anxiety: "害怕嘈杂干扰了纯粹观照，始终在寻找通往无限宁静的出口。", shadow: "作品门槛极高，有时会让普通观众感到被排斥的疏离感。", stats: [60, 85, 30, 95, 80], quote: "我的作品就是光本身。", books: ["《罗登火山口》", "《光之呼吸》"] },
-            BOURGEOIS: { name: "Louise Bourgeois / 路易丝·布尔乔亚", sub: "记忆创伤缝纫师", identity: "你通过巨大的蜘蛛和密室来治愈童年伤痕。", desc: "寻找情感对应物的人。那些蜘蛛其实都是你在缝合破碎的记忆。", logic: "将私密禁忌经验转化为压迫感装置，实现视觉上的心理分析。", material: "大理石、缝衣针。你认为艺术就是理智的保证。", resonance: "在焦虑横行的时代，你展示了如何与原生家庭的‘蜘蛛’共处。", anxiety: "对‘遗弃’的恐惧，对安全性持有近乎偏执的索求。", shadow: "过度沉溺过去可能阻碍自我的向前，使艺术变成无止尽宣泄。", stats: [95, 60, 85, 75, 80], quote: "艺术是理智的保证。", books: ["《蜘蛛》", "《破坏性父亲》"] },
-            ELIASON: { name: "Olafur Eliasson / 奥拉维尔·埃利亚松", sub: "生态气象实验室", identity: "你在展厅里制造太阳，唤醒人类对自然的共感。", desc: "参与。将雾气和彩虹带进美术馆，让人重新感受自然界原始的流动。", logic: "模拟庞大自然现象，迫使观者重新审视人与自然的脆弱共生关系。", material: "钠光灯、真正的冰川碎块。利用科技复归最原始的触觉。", resonance: "全球变暖不再是枯燥数据，而是生理性的‘警示艺术’。", anxiety: "对‘生态坍塌’的危机感，害怕丧失对自然界的情感能力。", shadow: "高度技术依赖掩盖审美逻辑，被误解为高级科技娱乐。", stats: [75, 90, 50, 85, 85], quote: "艺术是世界的一面透镜。", books: ["《天气计划》", "《现实中介》"] },
-            CATTELAN: { name: "Maurizio Cattelan / 莫瑞吉奥·卡特兰", sub: "神圣权威戏仿者", identity: "你用胶带和香蕉来挑战艺术市场的荒唐价值。", desc: "你用恶搞的幽默感嘲讽自命不凡的美术馆。让荒唐的事变得理所当然。", logic: "通过语境置换探讨‘意义’在当代社会的廉价性，消解神圣意象。", material: "人体雕塑、胶带。你认为最好的艺术就是一场严肃的玩笑。", resonance: "在解构时代，你的嘲讽是对荒诞世界最好的回击。", anxiety: "对‘意义’本身虚无性的恐惧。试图通过破坏寻找真实的尴尬。", shadow: "无休止的恶作剧容易被简化为吸睛的商业博主。", stats: [85, 75, 30, 70, 60], quote: "我只是一个图像的搬运工。", books: ["《喜剧演员》", "《第九小时》"] },
-            SUGIMOTO: { name: "Hiroshi Sugimoto / 杉本博司", sub: "时间的慢速记录者", identity: "你在长曝光的海平线中寻找永恒的视觉证据。", desc: "追求一种‘非人的视角’。抹去瞬间嘈杂，留下上千年的神圣寂静。", logic: "利用长曝光摄影将流动现象凝聚为静止本质，探讨文明起源。", material: "银盐感光相纸。你追求那种能够‘穿透时间’的视觉重量。", resonance: "在瞬时过剩的时代，那种极度专注的永恒感显得极其尊贵。", anxiety: "害怕瞬间流逝无法留下刻度，试图对抗自然界熵增的过程。", shadow: "极度的冷静显得过于沉闷和疏离，让观者产生审美壁垒。", stats: [55, 98, 85, 75, 70], quote: "我是时间的见证者。", books: ["《海景》", "《剧院系列》"] }
+            MICHELANGELO: { name: "Michelangelo / 米开朗基罗", sub: "石中灵魂的释放者", identity: "你在坚硬的大理石中刺探人类意志的极限。", desc: "你凿碎禁锢，释放灵魂。你是‘英雄主义悲歌’的谱写者，用痛苦释放美。", logic: "通过扭曲肌肉展现意志抗争的‘崇高感’，将人作为神性的载体。", material: "卡拉拉大理石、凿子. 你迷恋那种处于张力极限的形态。", resonance: "这种英雄主义悲歌提醒我们在绝望中也要奋力挣扎。", anxiety: "害怕不完美。由于过度用力而处于极度焦虑。", shadow: "过度追求极致带来的压迫感，使你成为了一个伟大的孤独者。", stats: [95, 60, 45, 80, 100], quote: "我在大理石中看见天使。", books: ["《米开朗基罗传》", "《创世纪》"] },
+            KUSAMA: { name: "Yayoi Kusama / 草间弥生", sub: "无限增殖的消融者", identity: "你在重复的韵律中寻找宇宙的锚点。", desc: "你通过‘重复’寻求救赎. 消融自我，成为无限矩阵的一份子，对抗恐惧。", logic: "以单一符号无限累积占领空间，实现从心理幻觉到现实的‘自我消融’。", material: "波点、反射镜面. 你认为单一圆点是连接宇宙的最小单位。", resonance: "个体被系统淹没的生存体验是现代人最深层的共鸣。", anxiety: "害怕自我边界被虚空吞噬，对‘不连续性’持有本能恐惧。", shadow: "过度执念可能导致现实感丧失，演变为病理性的自我封闭。", stats: [98, 40, 95, 30, 80], quote: "我的生命是在数百万个点中的一个。", books: ["《无限网》", "《我在这里》"] },
+            HIRST: { name: "Damien Hirst / 达明安·赫斯特", sub: "死亡实验室的系统员", identity: "你试图用秩序和甲醛来对冲生命的不确定性。", desc: "你迷恋分类. 在冷冰冰的理性框架中审视生命的脆弱与科学的局限。", logic: "将死亡工业化静态固定，探讨信仰、科学与资本之间的权力博弈。", material: "福尔马林、药丸矩阵. 你迷恋那种剥离情感的、冷酷的秩序感。", resonance: "在生物技术时代，我们的生命是否正被某种隐形规则分类？", anxiety: "对‘肉体腐败’的本能恐惧. 通过极度控制来抵御生命的失效。", shadow: "理性掩盖了情感贫瘠，使艺术沦为某种带有投机性质的游戏。", stats: [85, 95, 60, 75, 50], quote: "艺术是为了解释生命。", books: ["《为了上帝之爱》", "《难以置信的珍宝》"] },
+            KAPOOR: { name: "Anish Kapoor / 安尼施·卡普尔", sub: "物质虚空的炼金术士", identity: "你在寻找能吞噬所有光线的纯粹深渊。", desc: "你追求极致知觉. 你是在物质世界中寻找‘非物质’缝隙的漫游者。", logic: "通过改变物体表面消除体积感，引导观者进入一种超验的觉知状态。", material: "Vantablack涂层、极深红颜料. 你追求刺痛视网膜的纯粹度。", resonance: "在体验变轻的数字时代，你在试图夺回感官的生理重量。", anxiety: "对‘物质平庸化’的厌恶，通过极端的体量感来确证存在。", shadow: "追求极致体感可能导致作品脱离语境，成为纯粹的感官神话。", stats: [75, 65, 45, 98, 85], quote: "我一直被这种‘非物质’的力量吸引。", books: ["《利维坦》", "《非物质虚空》"] },
+            RICHTER: { name: "Gerhard Richter / 格哈德·里希特", sub: "模糊现实的存档员", identity: "你在真实与虚构的重叠地带徘徊。", desc: "你警惕绝对真理. 解构历史与记忆的真相，拒绝任何固化的定义。", logic: "通过刮擦画面意识到‘不可见’的存在，探讨图像作为假象的本质。", material: "模糊的照片底图、金属刮刀. 你拒绝被任何风格所固定。", resonance: "后真相时代，我们看到的‘真相’往往是被媒介处理过的残影。", anxiety: "对‘确定性’的怀疑，害怕艺术沦为某种煽动的工具。", shadow: "过度疏离可能让人觉得冷酷，陷入一种虚无主义的循环。", stats: [65, 90, 55, 75, 92], quote: "画画是为了让不可见的东西变得可见。", books: ["《阿特拉斯》", "《照片画集》"] },
+            ABRAMOVIC: { name: "Marina Abramovic / 玛丽娜·阿布拉莫维奇", sub: "身体边界测试者", identity: "你用极端的意志去刺探人类情感的底线。", desc: "将肉身作为媒介，在极端的痛苦或沉默中寻找意识的升华与洗涤。", logic: "通过长时间重复行为打破表演者与观者的界限，实现精神转化。", material: "瞳孔、时间与绝对的沉默. 你认为时间是艺术最核心的物质。", resonance: "在缺乏连接的社交时代，生理性的‘凝视’具有巨大冲击力。", anxiety: "对‘虚假’的强烈不适，始终在刺破隔离痛苦的保护壳。", shadow: "表演性受难有时滑向自我的神圣化，显得过于自恋。", stats: [95, 50, 40, 85, 98], quote: "艺术家必须是一面镜子。", books: ["《穿墙而过》", "《节奏系列》"] },
+            TURRELL: { name: "James Turrell / 詹姆斯·特瑞尔", sub: "光线与感知捕手", identity: "你让光线脱离实体，成为一种宗教体验。", desc: "你只用光. 光不再是照明媒介，光本身就是具有重量的实体。", logic: "利用视觉错觉引导观者进入冥想式的觉知空间，消解空间的深度。", material: "天空、特定波长光. 你追求的是感官的绝对纯净度。", resonance: "充满蓝光的喧嚣时代，那种纯粹光线洗礼提供了稀缺的宁静感。", anxiety: "害怕嘈杂干扰了纯粹观照，始终在寻找通往无限宁静的出口。", shadow: "作品门槛极高，有时会让普通观众感到被排斥的疏离感。", stats: [60, 85, 30, 95, 80], quote: "我的作品就是光本身。", books: ["《罗登火山口》", "《光之呼吸》"] },
+            BOURGEOIS: { name: "Louise Bourgeois / 路易丝·布尔乔亚", sub: "记忆创伤缝纫师", identity: "你通过巨大的蜘蛛和密室来治愈童年伤痕。", desc: "寻找情感对应物的人. 那些蜘蛛其实都是你在缝合破碎的记忆。", logic: "将私密禁忌经验转化为压迫感装置，实现视觉上的心理分析。", material: "大理石、缝衣针. 你认为艺术就是理智的保证。", resonance: "在焦虑横行的时代，你展示了如何与原生家庭的‘蜘蛛’共处。", anxiety: "对‘遗弃’的恐惧，对安全性持有近乎偏执的索求。", shadow: "过度沉溺过去可能阻碍自我的向前，使艺术变成无止尽宣泄。", stats: [95, 60, 85, 75, 80], quote: "艺术是理智的保证。", books: ["《蜘蛛》", "《破坏性父亲》"] },
+            ELIASON: { name: "Olafur Eliasson / 奥拉维尔·埃利亚松", sub: "生态气象实验室", identity: "你在展厅里制造太阳，唤醒人类对自然的共感。", desc: "参与. 将雾气和彩虹带进美术馆，让人重新感受自然界原始的流动。", logic: "模拟庞大自然现象，迫使观者重新审视人与自然的脆弱共生关系。", material: "钠光灯、真正的冰川碎块. 利用科技复归最原始的触觉。", resonance: "全球变暖不再是枯燥数据，而是生理性的‘警示艺术’。", anxiety: "对‘生态坍塌’的危机感，害怕丧失对自然界的情感能力。", shadow: "高度技术依赖掩盖审美逻辑，被误解为高级科技娱乐。", stats: [75, 90, 50, 85, 85], quote: "艺术是世界的一面透镜。", books: ["《天气计划》", "《现实中介》"] },
+            CATTELAN: { name: "Maurizio Cattelan / 莫瑞吉奥·卡特兰", sub: "神圣权威戏仿者", identity: "你用胶带和香蕉来挑战艺术市场的荒唐价值。", desc: "你用恶搞的幽默感嘲讽自命不凡的美术馆. 让荒唐的事变得理所当然。", logic: "通过语境置换探讨‘意义’在当代社会的廉价性，消解神圣意象。", material: "人体雕塑、胶带. 你认为最好的艺术就是一场严肃的玩笑。", resonance: "在解构时代，你的嘲讽是对荒诞世界最好的回击。", anxiety: "对‘意义’本身虚无性的恐惧. 试图通过破坏寻找真实的尴尬。", shadow: "无休止的恶作剧容易被简化为吸睛的商业博主。", stats: [85, 75, 30, 70, 60], quote: "我只是一个图像的搬运工。", books: ["《喜剧演员》", "《第九小时》"] },
+            SUGIMOTO: { name: "Hiroshi Sugimoto / 杉本博司", sub: "时间的慢速记录者", identity: "你在长曝光的海平线中寻找永恒的视觉证据。", desc: "追求一种‘非人的视角’. 抹去瞬间嘈杂，留下上千年的神圣寂静。", logic: "利用长曝光摄影将流动现象凝聚为静止本质，探讨文明起源。", material: "银盐感光相纸. 你追求那种能够‘穿透时间’的视觉重量。", resonance: "在瞬时过剩的时代，那种极度专注的永恒感显得极其尊贵。", anxiety: "害怕瞬间流逝无法留下刻度，试图对抗自然界熵增的过程。", shadow: "极度的冷静显得过于沉闷和疏离，让观者产生审美壁垒。", stats: [55, 98, 85, 75, 70], quote: "我是时间的见证者。", books: ["《海景》", "《剧院系列》"] }
         };
 
         const QUESTIONS = [
-            { id: 1, text: "当你观察一张面孔时，你第一眼最留意到什么？", source: "达·芬奇 的比例研究", options: [
+            { id: 1, text: "当你观察一张陌生面孔时，你第一眼最留意到什么？", source: "达·芬奇 的比例研究", options: [
                 { text: "五官之间极其精准、和谐的比例关系", type: "DA_VINCI" }, { text: "阴影在眼窝和皮肤褶皱处留下的厚重感", type: "REMBRANDT" }, { text: "那双眼睛中流露出的、某种难以言说的强烈心境", type: "CARAVAGGIO" }, { text: "面孔被光线拆解后，呈现出的支离破碎的几何感", type: "PICASSO" }
             ]},
             { id: 2, text: "如果你站在一片向日葵田里，你的第一本能是：", source: "梵高《向日葵》", options: [
@@ -219,7 +225,7 @@
                 { text: "一个发射出刺眼、绝对光芒的几何发光体", type: "TURRELL" }, { text: "一个在浓雾中散发温润钠光、能激发共感的太阳", type: "ELIASON" }, { text: "一个如同梦境入侵、缓缓向下融化的奇怪星球", type: "DALI" }, { text: "一个可以用黄金分割公式完美推导出运行轨迹的球体", type: "DA_VINCI" }
             ]},
             { id: 19, text: "你相信“真实”是什么样子的？", source: "图像真理性探讨", options: [
-                { text: "真实就是那些极其肮脏、极其平凡的街道日常景象", type: "CARAVAGGIO" }, { text: "真实隐藏在被层层涂抹后、依然看不透的虚幻残影中", type: "RICHTER" }, { text: "真实是解剖刀下最严密、最符合逻辑的底层结构", type: "DA_VINCI" }, { text: "真实就是我心跳的颤动，是我身上不可磨灭的伤疤", type: "VAN_GOGH" }
+                { text: "真实就是那些极其肮脏、极其平凡的街道日常景象", type: "CARAVAGGIO" }, { text: "真实隐藏在被层层涂抹后、依然看不透的虚幻残影中", type: "RICHTER" }, { text: "真实是解剖刀下最严密、最符合逻辑的底层结构", type: "DA_VINCI" }, { text: "真实就是我心跳的颤动，是我身上不可磨灭的伤痕", type: "VAN_GOGH" }
             ]},
             { id: 20, text: "当你的原型特质被外界干扰或嘲弄时，你会：", source: "艺术家性格防御机制", options: [
                 { text: "将干扰作为素材，不断重复它，直到干扰彻底消融", type: "KUSAMA" }, { text: "用一个极其荒诞的恶搞反击回去，让对方感到尴尬", type: "CATTELAN" }, { text: "沉默、平静地注视挑衅者，直到对方感到灵魂枯竭", type: "ABRAMOVIC" }, { text: "在大理石中继续雕琢，因为意志从不依赖外界评价", type: "MICHELANGELO" }
@@ -391,23 +397,23 @@
                     )}
 
                     {step === 'quiz' && (
-                        <div className="max-w-xl mx-auto animate-fade-in space-y-12 text-center relative px-8 py-20 flex-grow flex flex-col justify-center" key={currentQ}>
-                            <div className="flex justify-between items-center border-b border-black/5 pb-6">
-                                <button onClick={handleBack} disabled={isTransitioning} className="text-[10px] uppercase opacity-40 hover:opacity-100 transition-all font-bold tracking-widest disabled:opacity-20 text-[#D62828]">BACK</button>
+                        <div className="max-w-xl mx-auto animate-fade-in space-y-8 md:space-y-12 text-center relative px-8 py-10 md:py-20 flex-grow flex flex-col justify-center" key={currentQ}>
+                            <div className="flex justify-between items-center border-b border-black/5 pb-4 md:pb-6">
+                                <button onClick={handleBack} disabled={isTransitioning} className="text-[9px] uppercase opacity-40 hover:opacity-100 transition-all font-bold tracking-widest disabled:opacity-20 text-[#2D2A26]">BACK</button>
                                 <div className="flex items-center gap-3">
-                                    <span className="text-[10px] font-mono text-gray-400 uppercase">Node_{String(currentQ + 1).padStart(2, '0')}</span>
+                                    <span className="text-[10px] font-mono text-gray-400">NODE_{String(currentQ + 1).padStart(2, '0')}</span>
                                     <div className="h-[1px] w-12 bg-black/10"></div>
                                     <span className="text-[10px] font-mono text-[#D62828]">30</span>
                                 </div>
                             </div>
                             
-                            <div className="space-y-10 min-h-[220px] flex flex-col items-center justify-center relative py-12 px-4">
-                                <h2 className="text-3xl md:text-4xl font-normal leading-tight text-[#2D2A26] serif">{QUESTIONS[currentQ].text}</h2>
-                                <div className="w-12 h-0.5 bg-[#D62828]/10 mt-8"></div>
-                                <p className="text-[10px] text-gray-400 italic tracking-[0.2em] uppercase">— {QUESTIONS[currentQ].source} —</p>
+                            <div className="space-y-6 md:space-y-10 min-h-[120px] md:min-h-[220px] flex flex-col items-center justify-center relative py-8 md:py-12 px-4">
+                                <h2 className="text-xl md:text-4xl font-medium leading-snug text-[#2D2A26] serif">{QUESTIONS[currentQ].text}</h2>
+                                <div className="w-12 h-0.5 bg-[#D62828]/10 mt-6 md:mt-8"></div>
+                                <p className="text-[9px] text-gray-400 italic tracking-[0.1em] uppercase">— {QUESTIONS[currentQ].source} —</p>
                             </div>
 
-                            <div className="flex flex-col text-left pt-6 space-y-2">
+                            <div className="flex flex-col text-left pt-4 md:pt-6 space-y-1">
                                 {QUESTIONS[currentQ].options.map((opt, i) => (
                                     <button 
                                         key={`${currentQ}-${i}`} 
@@ -415,8 +421,8 @@
                                         className={`option-btn group relative ${selectedIdx === i ? 'selected' : ''}`}
                                     >
                                         <div className="flex items-center">
-                                            <span className={`text-[11px] mr-8 font-mono transition-colors ${selectedIdx === i ? 'text-[#D62828]' : 'text-gray-300'}`}>0{i+1}</span>
-                                            <span className={`text-[16px] leading-relaxed transition-colors ${selectedIdx === i ? 'text-black' : 'text-gray-700'}`}>{opt.text}</span>
+                                            <span className={`text-[10px] md:text-[11px] mr-6 md:mr-8 font-mono transition-colors ${selectedIdx === i ? 'text-[#D62828]' : 'text-gray-300'}`}>0{i+1}</span>
+                                            <span className={`text-[14px] md:text-[16px] leading-relaxed transition-colors ${selectedIdx === i ? 'text-black' : 'text-gray-700'}`}>{opt.text}</span>
                                         </div>
                                     </button>
                                 ))}
@@ -476,7 +482,7 @@
                                         <span className="text-[10px] font-mono text-gray-300">04</span>
                                     </div>
                                     <div className="p-4">
-                                        <p className="text-[18px] leading-relaxed text-[#2D2A26] italic opacity-90 serif">{result.resonance}</p>
+                                        <p className="text-[17px] leading-relaxed text-[#2D2A26] italic opacity-90 serif">{result.resonance}</p>
                                     </div>
                                 </section>
                             </div>
@@ -501,7 +507,7 @@
 
                             <div className="pt-24 flex flex-col gap-6 items-center">
                                 <button onClick={() => window.location.reload()} className="px-14 py-7 border border-black/40 text-[12px] font-bold tracking-[0.7em] uppercase hover:bg-[#D62828] hover:text-white transition-all shadow-xl active:scale-95">再次扫描图谱 / RESTART</button>
-                                <p className="text-[10px] text-center text-gray-400 tracking-[0.6em] uppercase opacity-60 font-mono">© 2026 Art Prototype Project by @Emergence_Lab</p>
+                                <p className="text-[9px] text-center text-gray-400 tracking-[0.6em] uppercase opacity-60 font-mono">© 2026 Art Prototype Project by @Emergence_Lab</p>
                             </div>
                         </div>
                     )}

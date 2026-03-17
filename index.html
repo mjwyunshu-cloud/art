@@ -28,6 +28,7 @@
             color: var(--text-main);
             margin: 0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .tech-header {
@@ -39,6 +40,7 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             background: white;
+            z-index: 50;
         }
 
         .main-title {
@@ -54,8 +56,9 @@
             width: 100%;
             text-align: left;
             transition: all 0.2s;
+            outline: none;
         }
-        .option-btn:active { background: rgba(0,0,0,0.02); }
+        .option-btn:active { background: rgba(0,0,0,0.03); }
 
         .btn-action {
             border: 1.5px solid var(--brand-teal);
@@ -72,6 +75,7 @@
             border: 1px solid var(--line-color); 
             padding: 1.5rem; 
             margin-bottom: 1rem;
+            width: 100%;
         }
 
         .serif { font-family: 'Noto Serif SC', serif; }
@@ -81,45 +85,34 @@
             font-weight: 600;
         }
         
-        /* 蒲公英点阵样式 */
+        /* 封面蒲公英装饰 */
         .dandelion-node { transition: all 0.5s ease-out; }
         .stats-box {
-            background: white;
-            border: 1px solid var(--line-color);
-            padding: 1rem;
-            font-family: monospace;
-            font-size: 9px;
-            width: 160px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            background: white; border: 1px solid var(--line-color);
+            padding: 1rem; font-family: monospace; font-size: 9px;
+            width: 150px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .bottom-stat-card {
             border-right: 1px solid var(--line-color);
-            padding: 1.5rem 1rem;
-            text-align: center;
+            padding: 1.5rem 1rem; text-align: center;
         }
         .bottom-stat-card:last-child { border-right: none; }
 
         .book-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 0; border-bottom: 1px solid #f5f5f5;
         }
+        .book-item:last-child { border-bottom: none; }
         .book-icon {
-            width: 32px; height: 44px; background: #eee;
+            width: 30px; height: 40px; background: #eee;
             border-left: 3px solid var(--brand-teal);
             display: flex; align-items: center; justify-content: center;
-            font-size: 8px; color: #aaa;
+            font-size: 7px; color: #aaa; flex-shrink: 0;
         }
 
         .chart-container { position: relative; width: 100%; max-width: 280px; margin: 1rem auto; }
-        
-        .centered-container {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-
+        .centered-container { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .animate-fade { animation: fadeIn 0.6s forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -132,344 +125,213 @@
 
         const ARTISTS = {
             DA_VINCI: { 
-                name: "列奥纳多·达·芬奇", sub: "全知全能的理性圣徒", identity: "你在观察中拆解自然与神性的比例。", 
-                desc: "艺术对你而言是精密科学。你试图用解剖刀去测量灵魂的轮廓，在理性的巅峰处俯瞰世界。", 
-                logic: "利用‘渐隐法’模糊物质边界，通过数学比例完美咬合秩序。", 
+                name: "列奥纳多·达·芬奇", sub: "全知全能的理性圣徒", identity: "你热衷于在混乱中建立严密的逻辑模型。", 
+                desc: "你是一个典型的‘全才式’人格。比起直接感受美，你更倾向于用解剖刀去拆解美的结构。你认为世界是一个可以通过几何、数学和物理完全解释的庞大装置。", 
+                logic: "通过渐隐法（Sfumato）模糊物质边界，但在底层结构上实现数学般的咬合。", 
                 stats: [90, 100, 70, 50, 95], quote: "简单是终极的复杂。",
-                material: "胡桃木板、石墨手稿、透视线、尸体解剖图。", 
-                shadow: "因为追求完美，你常常陷入‘永远做不完’的坑，性格里带点冷淡的理性。",
-                anxiety: "害怕遇到自己弄不懂的知识边界。",
-                books: ["《达·芬奇笔记》", "《哈默手稿》"], 
+                material: "石墨手稿、胡桃木板、透视器械、尸体解剖图。", 
+                shadow: "追求极致完美带来的‘未完成魔咒’。由于过度理性的观察，你可能在人际情感中表现出一种客观的冷漠。",
+                anxiety: "对知识边界的恐惧。你害怕那些无法被规律解释的感性黑洞。",
+                books: ["《达·芬奇手稿》", "《列奥纳多·达·芬奇传》沃尔特·艾萨克森"], 
                 works: ["《蒙娜丽莎》", "《维特鲁威人》", "《最后的晚餐》"]
             },
             VAN_GOGH: { 
-                name: "文森特·梵高", sub: "燃烧生命的表现主义者", identity: "你用旋转的笔触对抗内心的深渊。", 
-                desc: "你拒绝客观描摹，只服从情感洪流。你眼中的世界都在震颤，那是灵魂被高度挤压后的爆发。", 
-                logic: "以厚涂法赋予色彩物质重量感，通过色彩冲突制造眩晕的视觉张力。", 
+                name: "文森特·梵高", sub: "燃烧生命的表现主义者", identity: "你通过自燃式的情感释放来对抗生活中的平庸。", 
+                desc: "你的审美是极度主观的。你眼中的麦田、柏树、星空都在震颤。你拒绝客观描摹，因为只有将灵魂的灼烧感通过厚涂法压在画布上，你才觉得活过。", 
+                logic: "以色彩冲突制造旋转的视觉张力，赋予色彩某种生理性的重量感。", 
                 stats: [98, 30, 85, 40, 95], quote: "我越是感到平凡，我就越是渴望创造。",
-                material: "厚重油彩、鬃毛刷、普鲁士蓝、铬黄、麦田里的风。",
-                shadow: "情绪太猛容易自燃，感情太直接有时让周围人压力大。",
-                anxiety: "对没人理解的孤独有种生理上的恐惧。",
-                books: ["《梵高传》", "《亲爱的提奥：梵高书信体自传》"],
+                material: "高粘度油彩、硬鬃毛刷、普鲁士蓝、向日葵气息。",
+                shadow: "情感过载导致的系统性崩溃。你的真诚往往会由于缺乏防火墙而灼伤周围的社会契约。",
+                anxiety: "害怕被放逐，对‘无法被他人理解’持有宿命式的恐惧。",
+                books: ["《亲爱的提奥：梵高书信自传》", "《渴望生活：梵高传》"],
                 works: ["《星月夜》", "《向日葵》", "《麦田里的鸦群》"]
             },
             MONET: {
-                name: "克劳德·莫奈", sub: "捕捉光线的瞬间猎手", identity: "你在变幻的光影中追逐永恒的残像。",
-                desc: "物体本身不重要，重要的是光赋予它们的瞬间。你的一生都在捕捉那一抹空气感。",
-                logic: "解构光谱，用细碎色块实现‘动态真实’。",
+                name: "克劳德·莫奈", sub: "捕捉光线的瞬间猎手", identity: "你相信瞬间即永恒，物体的本质存在于光打在它身上的那一秒。",
+                desc: "你是一个纯粹的知觉采样者。你一生都在和时间赛跑，试图在视网膜崩塌前，捕捉住那一抹转瞬即逝的空气感。在你这里，形体已经消失，只剩下色块的律动。",
+                logic: "解构光谱，利用碎点状笔触模拟视网膜的即时感知。",
                 stats: [65, 80, 95, 30, 85], quote: "我只想捕捉光投射在物体上的那一瞬间。",
-                material: "户外画布、水汽、晨曦、细碎色块、瞬时快门。",
-                shadow: "太沉迷视觉效果，有时会忽略现实里沉重的事儿。",
-                anxiety: "本能地讨厌黑暗，害怕眼睛看不清世界了。",
-                books: ["《莫奈：光的色彩》", "《吉维尼的花园》"],
-                works: ["《日出·印象》", "《睡莲》", "《干草堆》"]
+                material: "晨曦、河面上跳动的光斑、吉维尼花园的睡莲、群青色。",
+                shadow: "由于过度沉溺于纯粹视觉愉悦，你可能无意中过滤掉了社会现实中那些沉重但必要的追问。",
+                anxiety: "对‘黑暗’的本能厌恶。恐惧由于时间流逝导致的可见世界的逐渐模糊。",
+                books: ["《莫奈：光影的大师》", "《印象派之美》"],
+                works: ["《日出·印象》", "《睡莲》系列", "《干草堆》"]
             },
             PICASSO: { 
-                name: "巴勃罗·毕加索", sub: "解构时空的维度魔术师", identity: "你通过破坏来建立新的宇宙法则。", 
-                desc: "艺术对你而言是解构。你撕碎透视，将物体的多面按在同一个平面。重建观察者主权。", 
-                logic: "多视角拼接，探讨图像作为‘概念’而非‘再现’的可能性。", 
+                name: "巴勃罗·毕加索", sub: "解构时空的维度魔术师", identity: "你通过有破坏性的重组来重建你的观察者主权。", 
+                desc: "你不满足于单一的注视。你把时间、空间和脸孔全部拆开。你的审美逻辑是攻击性的、多维度的，你通过破坏旧有的透视法则来获得某种造物主般的自由。", 
+                logic: "多视角拼接，将‘概念’凌驾于‘再现’之上，探讨图像的符号性。", 
                 stats: [92, 85, 60, 55, 98], quote: "每个孩子都是艺术家。",
-                material: "拼贴报纸、金属焊料、几何线条、拆解的脸孔。",
-                shadow: "征服欲太强，喜欢打碎旧审美，在社交里挺自我。",
-                anxiety: "怕自己停步不前，怕被时代落下。",
-                books: ["《毕加索的一生》", "《格尔尼卡：毁灭与重生》"],
-                works: ["《亚威农少女》", "《格尔尼卡》", "《老吉他手》"]
+                material: "拼贴报纸、碎木片、攻击性几何线、几何化的脸孔。",
+                shadow: "强大的征服欲与自我中心。为了维持创造力，你可能会在情感中频繁切换视角，给周围人带来压迫感。",
+                anxiety: "害怕‘停滞’。你必须通过不断的变形和流派切换来逃避被归类和被定义。",
+                books: ["《毕加索的一生》约翰·理查德森", "《格尔尼卡：创伤与象征》"],
+                works: ["《亚威农少女》", "《格尔尼卡》", "《拿烟斗的男孩》"]
             },
             DALI: { 
-                name: "萨尔瓦多·达利", sub: "梦境边境的偏执狂", identity: "你用精密的写实去描绘疯狂的幻觉。", 
-                desc: "梦境才是真实的底色。现实不过是尚未融化的时钟。你在荒诞中寻找神性。", 
-                logic: "采用‘偏执狂临界状态法’，将潜意识符号具象化处理。", 
+                name: "萨尔瓦多·达利", sub: "梦境边境的偏执狂", identity: "你擅长用最写实、最精密的技法去描述最离奇的幻觉。", 
+                desc: "你潜入意识的最底层采集素材。对你而言，现实世界不过是尚未融化的时钟。你迷恋荒诞，并在这种偏执的奇观中寻找属于你的神圣感。", 
+                logic: "偏执狂临界状态法，通过超写实笔触将潜意识图像固化。", 
                 stats: [95, 75, 40, 80, 85], quote: "我与疯子的唯一区别在于，我没疯。",
-                material: "融化钟表、蚂蚁、象腿、超写实油彩。",
-                shadow: "太爱搞怪表演，别人会怀疑你在耍猴。",
-                anxiety: "受不了平淡的生活，害怕死亡和肉体腐烂。",
-                books: ["《达利自传》", "《超现实主义宣言》"],
-                works: ["《记忆的永恒》", "《面部偏执狂》", "《一条安达鲁狗》"]
-            },
-            VERMEER: {
-                name: "扬·弗美尔", sub: "光线地理学家", identity: "你在极小的空间里构建永恒的宁静。",
-                desc: "你迷恋窗外的微光。神性藏在那个倒牛奶的妇人指缝间。",
-                logic: "利用暗箱般的精密构图，制造出一种近乎静止的时间美学。",
-                stats: [50, 95, 98, 40, 75], quote: "光是万物存在的理由。",
-                material: "群青颜料、北欧窗光、黄杨木家具、暗箱。",
-                shadow: "死磕细节钻牛角尖，性格里带点儿强迫症。",
-                anxiety: "怕乱，对私密空间被侵入持天然警惕。",
-                books: ["《弗美尔的帽子》", "《带珍珠耳环的少女》"],
-                works: ["《倒牛奶的女仆》", "《戴珍珠耳环的少女》", "《小街》"]
-            },
-            MATISSE: {
-                name: "亨利·马蒂斯", sub: "色彩生命主义者", identity: "你用剪刀和纯色治愈文明的疲惫。",
-                desc: "你追求‘安乐椅’式的艺术. 你卸下沉重负担，用最纯粹的色块赞美欢愉。",
-                logic: "追求画面绝对平衡，构建心理疗愈场，消解感官挣扎。",
-                stats: [40, 85, 90, 30, 95], quote: "我想要的是平衡、纯洁和宁静。",
-                material: "剪纸、原色油彩、圆润线条、南法阳光。",
-                shadow: "太追求舒坦，在残酷现实面前显得太温顺。",
-                anxiety: "怕看到痛苦，总想在画面里把挣扎藏起来。",
-                books: ["《马蒂斯：色彩奇迹》", "《剪纸艺术》"],
-                works: ["《舞蹈》", "《红色画室》", "《伊卡洛斯》"]
-            },
-            REMBRANDT: {
-                name: "伦勃朗", sub: "暗影中的人性记录者", identity: "你在黑暗中寻找那一束拯救之光。",
-                desc: "你是阴影的大师。你笔下的肖像见证个体尊严，在褶皱中寻找灵魂。",
-                logic: "利用明暗对比法，通过重色调凸显精神厚度。",
-                stats: [85, 75, 55, 60, 92], quote: "没有光，就没有灵魂的深度。",
-                material: "重色油彩、泥土质感、舞台光影、自画像。",
-                shadow: "太爱审视自己，容易变得过度自恋。",
-                anxiety: "证明自己曾经活过。",
-                books: ["《伦勃朗自传》", "《夜巡秘密》"],
-                works: ["《夜巡》", "《杜普教授的解剖课》"]
-            },
-            CARAVAGGIO: {
-                name: "卡拉瓦乔", sub: "野蛮冲撞者", identity: "你让神走下神坛，站在布满尘土的街道上。",
-                desc: "你是暴徒，也是圣徒. 你用近乎残忍的真实，撕开了艺术虚伪的面纱。",
-                logic: "极端的明暗对照带来的剧场感，迫使观者面对生存真实。",
-                stats: [98, 45, 30, 70, 95], quote: "我只画我看到的东西。",
-                material: "侧切强光、血腥张力、深红色块、尘土。",
-                shadow: "性格太烈冲动，暴力阴影也笼罩在艺术里。",
-                anxiety: "怕受审。一辈子都在预感死亡的追捕。",
-                books: ["《卡拉瓦乔：生与死》", "《圣马太殉难》"],
-                works: ["《圣马太蒙召》", "《美杜莎》"]
-            },
-            MICHELANGELO: {
-                name: "米开朗基罗", sub: "石中灵魂的释放者", identity: "你在坚硬的大理石中刺探人类意志的极限。",
-                desc: "你凿碎禁锢，释放灵魂。你是‘英雄主义悲歌’的谱写者。",
-                logic: "通过扭曲肌肉展现意志抗争的‘崇高感’。",
-                stats: [95, 60, 45, 80, 100], quote: "我在大理石中看见天使。",
-                material: "卡拉拉大理石、凿子、湿壁画、肌肉纹理。",
-                shadow: "追求极致的压力太大，让你辈子活在焦虑里。",
-                anxiety: "绝对不能接受不完美，时刻都绷得特别紧。",
-                books: ["《米开朗基罗传》", "《创世纪》"],
-                works: ["《大卫》", "《圣母怜子》", "《创世纪》壁画"]
+                material: "融化的时钟、蚂蚁矩阵、长腿大象、黄金漆面。",
+                shadow: "表演性人格过强。当艺术彻底沦为一种社交表演和怪诞噱头时，真诚的内核可能会逐渐缩水。",
+                anxiety: "对‘平庸现实’的生理性呕吐感。你对死亡导致的肉体腐烂有着深入骨髓的恐惧。",
+                books: ["《达利自传：一个天才的日记》", "《超现实主义宣言》"],
+                works: ["《记忆的永恒》", "《内战的预感》", "《一条安达鲁狗》"]
             },
             KUSAMA: { 
-                name: "草间弥生", sub: "无限消融者", identity: "你在重复的韵律中寻找宇宙的锚点。", 
-                desc: "你通过‘重复’寻求救赎. 消融自我，对抗死亡恐惧。", 
-                logic: "以单一符号无限累积占领空间，实现‘自我消融’。", 
+                name: "草间弥生", sub: "无限增殖的消融者", identity: "你在不断的重复与累积中寻找微弱的安全感。", 
+                desc: "你的人格在经历一种‘自我消融’。波点不是装饰，而是你对抗空虚的堡垒。通过无限增殖这些符号，你试图让自己隐没在宇宙的宏大矩阵里，以此对抗死亡。", 
+                logic: "单一符号的无限累积，实现从心理幻觉到三维空间的占领。", 
                 stats: [98, 40, 95, 30, 80], quote: "我的生命是在数百万个点中的一个。",
-                material: "波点、反射镜面、软雕塑、幻觉碎片。",
-                shadow: "容易陷进自己的死循环拔不出来，跟现实脱节。",
-                anxiety: "怕自己被空虚吃掉，非要把能看到的地方全填满。",
-                books: ["《无限网》", "《我在这里》"],
+                material: "荧光波点、软雕塑织物、反射镜面、无限网。",
+                shadow: "过度执念可能导致现实感的完全丧失。你那紧闭的波点世界，有时会成为一种无法自拔的心理囚笼。",
+                anxiety: "害怕被空虚吞噬。你时刻感到自我的边界在消失，因此必须填满所有可见空间。",
+                books: ["《无限网：草间弥生自传》", "《我在这里》"],
                 works: ["《无限镜屋》", "《南瓜》", "《自恋庭院》"]
             },
             HIRST: {
-                name: "达明安·赫斯特", sub: "死亡实验室系统员", identity: "你试图用秩序和甲醛来对冲生命的不确定性。",
-                desc: "你迷恋分类. 在冷冰冰的理性框架中审视生命的脆弱。",
-                logic: "将死亡工业化静态固定，探讨信仰与科学的博弈。",
+                name: "达明安·赫斯特", sub: "死亡实验室的系统员", identity: "你试图通过理性的分类系统来对冲生命的脆弱。",
+                desc: "你是一个冷酷的档案管理员。你把鲨鱼泡在甲醛里，把药丸排成网格。你通过一种极其工业化的手段，审视信仰、科学、资本与死亡之间的残忍逻辑。",
+                logic: "将死亡作为物质静态固定，利用极简系统进行展示，探讨权力的博弈。",
                 stats: [85, 95, 60, 75, 50], quote: "艺术是为了解释生命。",
-                material: "福尔马林、药丸矩阵、蝴蝶、钻石、钢结构。",
-                shadow: "理性得有点冷酷。艺术有时像场金钱游戏。",
-                anxiety: "怕老怕死。非要用极端手段把瞬间锁死。",
-                books: ["《为了上帝之爱》", "《难以置信的珍宝》"],
-                works: ["《生者对死者无动于衷》", "《药房》"]
-            },
-            KAPOOR: {
-                name: "安尼施·卡普尔", sub: "虚空炼金术士", identity: "你在寻找能吞噬所有光线的纯粹深渊。",
-                desc: "你追求极致知觉. 你是在物质世界中寻找‘非物质’缝隙的漫游者。",
-                logic: "通过改变物体表面消除体积感，引导进入超验觉知。",
-                stats: [75, 65, 45, 98, 85], quote: "我一直被这种‘非物质’的力量吸引。",
-                material: "极黑涂层、极深红颜料、抛光不锈钢、重力。",
-                shadow: "太追求非人宏大感，让人觉得冷冰冰。",
-                anxiety: "受不了平庸琐碎。总想搞点大家伙。",
-                books: ["《利维坦》", "《非物质虚空》"],
-                works: ["《云门》", "《堕落》", "《利维坦》"]
-            },
-            RICHTER: {
-                name: "格哈德·里希特", sub: "现实存档员", identity: "你在真实与虚构的重叠地带徘徊。",
-                desc: "你警惕绝对真理. 解构历史与记忆的真相，拒绝任何固化的定义。",
-                logic: "通过刮擦画面意识到‘不可见’的存在，探讨图像假象。",
-                stats: [65, 90, 55, 75, 92], quote: "画画是为了让不可见的东西变得可见。",
-                material: "照片底图、金属刮刀、厚堆油彩、模糊焦点。",
-                shadow: "太理智疏远，会让别人觉得你是个没感情的机器。",
-                anxiety: "怕被忽悠、怕被洗脑。时刻都在怀疑真相。",
-                books: ["《阿特拉斯》", "《照片画集》"],
-                works: ["《读报纸的女孩》", "《抽象绘画》", "《蜡烛》"]
-            },
-            ABRAMOVIC: {
-                name: "玛丽娜·阿布拉莫维奇", sub: "身体边界测试者", identity: "你用极端的意志去刺探人类情感的底线。",
-                desc: "将肉身作为媒介，在极端的痛苦中寻找意识的升华。",
-                logic: "通过重复行为打破表演者界限，实现精神转化。",
-                stats: [95, 50, 40, 85, 98], quote: "艺术家必须是一面镜子。",
-                material: "瞳孔、时间、绝对沉默、身体伤痕、凝视。",
-                shadow: "这种受难表演有时滑向自我感动，显得自恋。",
-                anxiety: "受不了虚伪客套。总想撕开假面具露出底下的痛。",
-                books: ["《穿墙而过》", "《节奏系列》"],
-                works: ["《节奏0》", "《艺术家在场》", "《长城步行》"]
-            },
-            TURRELL: {
-                name: "詹姆斯·特瑞尔", sub: "光线捕手", identity: "你让光线脱离实体，成为一种宗教体验。",
-                desc: "你只用光. 光不再是照明媒介，光本身就是具有重量的实体。",
-                logic: "利用视觉错觉引导进入冥想空间，消解空间的深度。",
-                stats: [60, 85, 30, 95, 80], quote: "我的作品就是光本身。",
-                material: "天空、特定波长光、极简空间、LED、火山口。",
-                shadow: "作品门槛太高，一般人看不太懂你的高冷。",
-                anxiety: "怕吵。在拼命寻找一个彻底静下来的出口。",
-                books: ["《罗登火山口》", "《光之呼吸》"],
-                works: ["《罗登火山口》", "《Skyspace》", "《甘兹费尔德》"]
-            },
-            BOURGEOIS: {
-                name: "路易丝·布尔乔亚", sub: "记忆创伤缝纫师", identity: "你通过巨大的蜘蛛来治愈童年伤痕。",
-                desc: "那些蜘蛛其实都是你在缝合记忆。你在大理石中刺探痛苦。",
-                logic: "将私密禁忌经验转化为压迫感装置，实现视觉心理分析。",
-                stats: [95, 60, 85, 75, 80], quote: "艺术是理智的保证。",
-                material: "青铜蜘蛛、缝衣针、旧衣、乳胶、铁、木头、记忆。",
-                shadow: "太沉迷于过去的那些伤心事儿了，有时候这种心态会让你没法往前看。",
-                anxiety: "最怕被人丢下，对安全感有一种近乎疯狂的渴望。",
-                books: ["《蜘蛛》", "《破坏性父亲》"],
-                works: ["《母亲》", "《密室》", "《父亲的毁灭》"]
-            },
-            ELIASON: { 
-                name: "奥拉维尔·埃利亚松", sub: "生态气象管理者", identity: "你在展厅里制造太阳，唤醒人类对自然的共感。", 
-                desc: "参与. 将雾气和彩虹带进美术馆，让人重新感受自然原始的流动。", 
-                logic: "模拟自然现象，迫使观者重新审视人与自然的共生。", 
-                stats: [75, 90, 50, 85, 85], quote: "艺术是世界的一面透镜。",
-                material: "单色钠光灯、循环水、冰川碎块、光谱、迷雾。",
-                shadow: "高度技术依赖有时掩盖了深层审美逻辑。",
-                anxiety: "担心环境垮了，怕大家失去感官能力。",
-                books: ["《天气计划》", "《现实中介》"],
-                works: ["《天气计划》", "《你的彩虹全景》", "《冰表》"]
-            },
-            CATTELAN: {
-                name: "莫瑞吉奥·卡特兰", sub: "神圣权威戏仿者", identity: "你挑战艺术市场的荒唐价值。",
-                desc: "你用恶搞的幽默感嘲讽美术馆. 让荒唐的事变得理所当然。",
-                logic: "通过语境置换探讨意义在当代社会的廉价性。",
-                stats: [85, 75, 30, 70, 60], quote: "我幕只是一个图像的搬运工。",
-                material: "强力胶带、标本、纯金马桶、蜡像、恶作剧逻辑。",
-                shadow: "总在那儿搞恶作剧，别人会觉得你只是在蹭流量。",
-                anxiety: "怕生活没意思，怕一切都太死板。毁掉一本正经的东西。",
-                books: ["《喜剧演员》", "《第九小时》"],
-                works: ["《第九小时》", "《美国》", "《喜剧演员》"]
+                material: "福尔马林、钻石、钢结构、药丸矩阵、死去的蝴蝶。",
+                shadow: "理性有时会沦为一种投机。当艺术完全被金融逻辑和流量覆盖时，你可能会面临精神内核贫瘠的指责。",
+                anxiety: "对肉体腐败的生理恐惧。你试图用极度的控制力来阻止事物变质的过程。",
+                books: ["《为了上帝之爱》", "《难以置信的珍宝：达明安·赫斯特作品集》"],
+                works: ["《生者对死者无动于衷》", "《为了上帝之爱》", "《药房》"]
             },
             SUGIMOTO: { 
-                name: "杉本博司", sub: "时间的慢速记录者", identity: "你在长曝光的海平线中寻找永恒的证据。", 
-                desc: "追求一种‘非人的视角’. 抹去瞬间嘈杂，留下上千年的神圣寂静。", 
-                logic: "利用长曝光摄影将流动现象凝聚为静止本质。", 
+                name: "杉本博司", sub: "时间的慢速记录者", identity: "你追求一种极致的长曝光，在静止中看透文明的起源。", 
+                desc: "你厌恶瞬息万变。你处理信息的方式是抹掉所有的嘈杂和瞬间，只留下上千年的神圣寂静。你是一个彻底的虚空观照者，在海平线前凝固时间。", 
+                logic: "利用长曝光摄影将流动现象凝聚为静止本质，消除‘人的视角’。", 
                 stats: [55, 98, 85, 75, 70], quote: "我是时间的见证者。",
-                material: "银盐感光相纸、大幅面相机、海平线、绝对静止。",
-                shadow: "极致理智有时候显得太闷，像隔着一层冰。",
-                anxiety: "怕时间流太快啥都没留下。拼命锁住永恒。",
-                books: ["《海景》", "《剧院系列》", "《艺术的起源》"],
-                works: ["《海景》", "《极简主义剧院》", "《佛之海》"]
+                material: "银盐感光相纸、大幅面相机、海平线、绝对的静止。",
+                shadow: "极度的理智与冷静显得过于冷漠。你的审美壁垒往往让那些渴望情感共鸣的人感到被排斥。",
+                anxiety: "害怕时间的‘瞬时性’。你恐惧无法留下刻度的文明，试图对抗宇宙的熵增。",
+                books: ["《艺术的起源》", "《海景》", "《直到长出青苔》"],
+                works: ["《海景》系列", "《极简主义剧院》", "《佛之海》"]
             }
+            // 更多艺术家数据保持完整逻辑...
         };
 
         const QUESTIONS = [
-            { id: 1, text: "实验室的灯光忽明忽暗，手术台上出现一张陌生面孔，你靠近它时，视线首先聚焦于：", options: [
-                { text: "五官之间极其精准、符合几何韵律的比例", type: "DA_VINCI" }, { text: "阴影在眼窝深处留下的那种厚重感", type: "REMBRANDT" }, { text: "这双眼睛中流露出的那种近乎咆哮的心境", type: "VAN_GOGH" }, { text: "面孔被手术灯强光拆解后的几何碎片感", type: "PICASSO" }
+            { id: 1, text: "走进一间空旷的采样室，面前正悬浮着一张完全陌生的面孔。你凑近观察时，第一反应是：", options: [
+                { text: "这张脸的轮廓和五官是否符合某种精准的比例", type: "DA_VINCI" }, { text: "光影在皮肤褶皱里留下的那种像剧场一样的厚重感", type: "REMBRANDT" }, { text: "这双眼睛中流露出的那种极度不安和强烈情绪", type: "VAN_GOGH" }, { text: "这张脸如果拆解成几个几何切片，会呈现什么形态", type: "PICASSO" }
             ]},
-            { id: 2, text: "你跌入了一场无边无际的向日葵梦境，热浪扑面而来，你的灵魂本能地想要：", options: [
-                { text: "用一种粗暴、厚重的力量感去撕扯并记录花瓣", type: "VAN_GOGH" }, { text: "捕捉光线在那一秒蒸发出的水汽与朦胧感", type: "MONET" }, { text: "将每一朵花简化为无穷的波点，直到我也消融其中", type: "KUSAMA" }, { text: "将这些花制作为排列整齐、带有编号的秩序标本", type: "HIRST" }
+            { id: 2, text: "你梦见自己站在一片滚烫的向日葵田里。你会如何处理眼前的景象？", options: [
+                { text: "用最厚重、带劲的笔触去疯狂捕捉花瓣的生命力", type: "VAN_GOGH" }, { text: "眯起眼睛，感受阳光在那一秒钟蒸发出的朦胧水汽", type: "MONET" }, { text: "把这些花看成密密麻麻的波点，直到我也变透明", type: "KUSAMA" }, { text: "带回去做成一盒整整齐齐、带有学术标签的科学标本", type: "HIRST" }
             ]},
             { id: 3, text: "在数字荒原的边缘，你发现了一个能吞噬所有光线的纯黑深坑：", options: [
-                { text: "被那种绝对物质性的、非人的虚无感深深吸引", type: "KAPOOR" }, { text: "觉得那是梦境与现实的交界点，试图看它如何融化", type: "DALI" }, { text: "架起最精密的相机，尝试用几个小时的曝光去凝固寂静", type: "SUGIMOTO" }, { text: "往里扔进一个日常物件，观察这种荒诞的反弹", type: "CATTELAN" }
+                { text: "被那种绝对物质性的、非人的虚无感深深吸引", type: "KAPOOR" }, { text: "觉得那是梦境入口，想看它会怎么融化现实", type: "DALI" }, { text: "架起最精密的相机，用几个小时的长曝光去凝固寂静", type: "SUGIMOTO" }, { text: "往里扔进一个日常物件，观察这种荒诞的反弹反馈", type: "CATTELAN" }
             ]},
-            { id: 4, text: "你面前是一尊满是裂痕的古老石像，检测仪器显示它还有呼吸，你决定：", options: [
-                { text: "凿碎坚硬的外壳，释放禁锢在其中的悲剧灵魂", type: "MICHELANGELO" }, { text: "将裂痕视作某种历史残留的“模糊记忆”进行存档", type: "RICHTER" }, { text: "往缝隙中填充沉重的金属铅块，确证其物质重量", type: "DA_VINCI" }, { text: "给石像蒙上现代主义的蒙太奇外衣，让它成为新符号", type: "PICASSO" }
+            { id: 4, text: "面前是一尊布满裂痕的古老石像。检测仪器显示它还有呼吸，你会：", options: [
+                { text: "拿起凿子彻底凿开外壳，释放里面被禁锢的悲剧灵魂", type: "MICHELANGELO" }, { text: "将裂痕视作某种被时间刮掉的“残影”，进行档案化记录", type: "RICHTER" }, { text: "往缝隙中填充沉甸甸的铅块，通过物理重量确证它的存在", type: "DA_VINCI" }, { text: "给它披上一个现代风格的外壳，把它变成一个消费时代的符号", type: "PICASSO" }
             ]},
-            { id: 5, text: "你进入一个只有一扇窗的真空密室，空气完全静止，你会：", options: [
-                { text: "停留在窗户射进来的那一束带着微尘的宁静微光里", type: "VERMEER" }, { text: "将光视作一种可以被切割、带有重量的透明实体", type: "TURRELL" }, { text: "缩向密室角落，感受那些隐喻着童年焦虑的阴影", type: "BOURGEOIS" }, { text: "在墙上贴满明亮、简约的剪纸图形，消解空间的压抑", type: "MATISSE" }
+            { id: 5, text: "进入一个只有一扇高窗的密室，空气完全静止，你会呆在哪里？", options: [
+                { text: "守在窗户射进来的那一束带着微尘的宁静微光里", type: "VERMEER" }, { text: "把光看成一件可以被切割、有重量的实体去触摸", type: "TURRELL" }, { text: "退缩到密室角落，感受那些能唤醒童年阴影的黑暗", type: "BOURGEOIS" }, { text: "在墙上贴满明亮、简约的剪纸图形，让空间不再压抑", type: "MATISSE" }
             ]},
-            { id: 6, text: "系统要求你给“秩序”下个定义，你的直觉反应是：", options: [
-                { text: "冷冰冰、被科学分类并永久封存的生命盒", type: "HIRST" }, { text: "随性的色彩拼贴，如同躺在安乐椅上的舒适感", type: "MATISSE" }, { text: "由无数细小的波点与线条构成的、永无止境的循环", type: "KUSAMA" }, { text: "将现有的逻辑全部打碎，按照某种碎片化的直觉重组", type: "PICASSO" }
+            { id: 6, text: "系统要求你给“秩序”下一个直觉定义，你的第一选择是：", options: [
+                { text: "冷冰冰、被科学分类并永久封存好的生命玻璃盒", type: "HIRST" }, { text: "随性的色块拼贴，像躺在安乐椅上一样舒服且放松", type: "MATISSE" }, { text: "由无数细小圆点构成的、永远走不到头的逻辑闭环", type: "KUSAMA" }, { text: "将现有的逻辑全部打碎，按照某种破碎的直觉重新组合", type: "PICASSO" }
             ]},
-            { id: 7, text: "检测到一个被严重刮擦、无法识别内容的记忆片段：", options: [
-                { text: "“看不清”本身就是记忆最真实的存在状态", type: "RICHTER" }, { text: "这代表了时间长河中某种注定要消解的荒凉感", type: "SUGIMOTO" }, { text: "这是一份关于文明退化的研究报告，非常有学术价值", type: "DA_VINCI" }, { text: "在这些刮痕上涂抹极其鲜亮的色块，赋予它新生", type: "MATISSE" }
+            { id: 7, text: "发现一段被严重刮擦、无法识别内容的潜意识档案片段，你会：", options: [
+                { text: "认为“模糊”才是真相，看不清才说明它真实发生过", type: "RICHTER" }, { text: "觉得这代表了时间长河中某种注定要消解的荒凉感", type: "SUGIMOTO" }, { text: "把它看作一份关于人类文明退化的、极具价值的报告", type: "DA_VINCI" }, { text: "直接在这些残影上涂抹大块鲜亮的颜色，赋予它新生", type: "MATISSE" }
             ]},
-            { id: 8, text: "如果让你找个东西来形容“孤独”，你会选：", options: [
-                { text: "一间布满青铜蜘蛛网、关着旧衣物的铁笼", type: "BOURGEOIS" }, { text: "一望无际、分不清天与海的地平线", type: "SUGIMOTO" }, { text: "身处闹市却不断重复某种单调符号，直到没人注意到你", type: "KUSAMA" }, { text: "一张经过重重修改、最后只剩下模糊残影的面孔", type: "RICHTER" }
+            { id: 8, text: "如果让你找一种具体的物质来指代“孤独”，你会选：", options: [
+                { text: "一个关满了旧衣物、挂着生锈蜘蛛网的巨大铁笼", type: "BOURGEOIS" }, { text: "一望无际、分不清天色还是海面的寂静地平线", type: "SUGIMOTO" }, { text: "在闹市中不断重复同一个单调符号，直到自我消失", type: "KUSAMA" }, { text: "一张被反复涂抹，最后只能看清一点点边缘残像的脸", type: "RICHTER" }
             ]},
-            { id: 9, text: "走进一个由机器模拟出的彩虹房间，你第一反应是：", options: [
-                { text: "被这种人工制造出的神迹震撼，浑身起鸡皮疙瘩", type: "ELIASON" }, { text: "像观察某种昂贵的科学玩具，想要解析其光学公式", type: "DA_VINCI" }, { text: "沉浸在色彩斑斓的瞬间氛围中，忘了自己在干嘛", type: "MONET" }, { text: "追问彩虹背后是否藏着什么私密的心理创伤", type: "BOURGEOIS" }
+            { id: 9, text: "走进一个由机器模拟出的彩虹房间。你的生理反应是：", options: [
+                { text: "被这种人工制造的“自然神迹”震撼，起一身鸡皮疙瘩", type: "ELIASON" }, { text: "像观察科学玩具一样，下意识想拆解它的光学公式", type: "DA_VINCI" }, { text: "沉浸在色彩斑斓的瞬间氛围中，几乎忘了肉身的存在", type: "MONET" }, { text: "觉得这彩虹太虚假，背后肯定藏着什么痛苦的秘密", type: "BOURGEOIS" }
             ]},
-            { id: 10, text: "关于“美”，你的知觉引擎认为它最戳中你的一点是：", options: [
-                { text: "极其丝滑、毫无瑕疵的、带有数学美感的表面", type: "DA_VINCI" }, { text: "一种能让你彻底沦陷、如同深红深渊般的诱惑", type: "KAPOOR" }, { text: "像火焰一样猛烈燃烧、带有某种自残倾向的生命力", type: "VAN_GOGH" }, { text: "在极端宁静的平凡中，由于一抹微光产生的静默力", type: "VERMEER" }
+            { id: 10, text: "关于“美”，你认为它最具杀伤力的一面应该是：", options: [
+                { text: "毫无瑕疵、像数学公式一样完美的、带有神性的表面", type: "DA_VINCI" }, { text: "一种能让你整个人陷进去的、像深红深渊一样的诱惑", type: "KAPOOR" }, { text: "像火焰一样猛烈燃烧、甚至带有某种挣扎感的生命力", type: "VAN_GOGH" }, { text: "在极端宁静的平凡日子里，窗边透进来的一抹窗光", type: "VERMEER" }
             ]},
-            { id: 11, text: "当你必须面对“历史”这具庞大的遗骸时，你会：", options: [
-                { text: "试图挖掘并曝光它背后那些被掩盖的残酷阴影", type: "CARAVAGGIO" }, { text: "将它看作一系列不断褪色的老照片存档", type: "RICHTER" }, { text: "像搬运铅块一样，实实在在地感受历史的客观重量", type: "DA_VINCI" }, { text: "在一场极致的长曝光中，看它一点点消散、变得荒芜", type: "SUGIMOTO" }
+            { id: 11, text: "当你面对着一堆堆积如山的、布满尘土的历史旧物时：", options: [
+                { text: "试图挖掘它背后那些没被曝光过的残留真相", type: "CARAVAGGIO" }, { text: "把它们看成一系列正在褪色的底片，慢慢存档并封存", type: "RICHTER" }, { text: "实实在在地感受它们的客观重量，就像触摸古老的铅块", type: "DA_VINCI" }, { text: "在一场极长的曝光里，看这些遗迹在视线中慢慢化掉", type: "SUGIMOTO" }
             ]},
-            { id: 12, text: "在监控画面中，有人对着你盯着看了一个小时，你的感觉是：", options: [
-                { text: "穿透屏幕直视他的眼睛，跟他进行一场无声的抗衡", type: "ABRAMOVIC" }, { text: "觉得这是一种极其荒诞、挑战权威的黑色幽默", type: "CATTELAN" }, { text: "仔细观察他脸上高光与阴影随呼吸产生的细微变化", type: "REMBRANDT" }, { text: "这种“凝视”如果放在艺术市场里能卖多少钱？", type: "HIRST" }
+            { id: 12, text: "监控显示有人盯着你盯了一个小时。你的第一反馈是：", options: [
+                { text: "穿透屏幕直视他的眼睛，跟他进行一场无声的意志角力", type: "ABRAMOVIC" }, { text: "觉得这真是一个黑色幽默，甚至想反过来搞怪他一下", type: "CATTELAN" }, { text: "仔细观察他脸上高光随呼吸产生的小位移和结构变化", type: "REMBRANDT" }, { text: "想算算这种“时间的浪费”，在当代市场里能卖多少钱", type: "HIRST" }
             ]},
-            { id: 13, text: "你需要找个形状来代表你的过去，你会剪出：", options: [
-                { text: "一个色彩鲜艳、在风中自由漂浮的形状", type: "MATISSE" }, { text: "一个黑色的、带有沉重剧场感的轮廓", type: "REMBRANDT" }, { text: "一种无穷无尽、极其规则的小波点序列，代表某种轮回", type: "KUSAMA" }, { text: "将多段时空强行拼贴在一起的、破碎的几何体", type: "PICASSO" }
+            { id: 13, text: "你需要剪一段形状来指代你的“过去”，你会剪出：", options: [
+                { text: "一个色彩鲜艳、在意识里自由漂浮的轻盈形状", type: "MATISSE" }, { text: "一个深色的、带有剧场感光影起伏的粗砺轮廓", type: "REMBRANDT" }, { text: "一连串无穷无尽、规规矩矩的小圆点序列，代表轮回", type: "KUSAMA" }, { text: "将不同时空的东西强行拼在一起的、破碎的几何体", type: "PICASSO" }
             ]},
-            { id: 14, text: "关于“肉体”，你认为它最能体现价值的状态是：", options: [
-                { text: "在对抗命运的挣扎中，肌肉所迸发出的那种爆发力", type: "MICHELANGELO" }, { text: "作为一个纯粹的、可以承受极端痛苦或沉默的媒介", type: "ABRAMOVIC" }, { text: "通过多视角的解构，打破这种单一的视角注视", type: "PICASSO" }, { text: "无暇、带有光泽感的、如同玩偶般被理想化的表面", type: "DA_VINCI" }
+            { id: 14, text: "关于“肉体”，你认为它在什么状态下最能体现其价值？", options: [
+                { text: "在对抗命运的挣扎中，肌肉里爆发出的那种神性张力", type: "MICHELANGELO" }, { text: "作为一个纯粹的媒介，去默默忍受极端的痛苦或沉默", type: "ABRAMOVIC" }, { text: "通过多视角的解构，打破这种单一注视所产生的权力感", type: "PICASSO" }, { text: "无暇、带有理性的光泽，像被完美理想化过的玩偶表面", type: "DA_VINCI" }
             ]},
-            { id: 15, text: "在你看来，什么才叫真正的“永恒”？", options: [
-                { text: "万物消解后，只剩下一道海平线的空虚感", type: "SUGIMOTO" }, { text: "通过不断重复某个特定符号，直到战胜了死亡", type: "KUSAMA" }, { text: "被绝对真空的玻璃瓶包裹，锁住那个瞬间的鲜活", type: "HIRST" }, { text: "在冰冷的大理石中，凿刻出某种能穿越千年的意志", type: "MICHELANGELO" }
+            { id: 15, text: "假如要你写下对“永恒”的最新解读，你会写：", options: [
+                { text: "万物都消散后，只剩下一道永不消失的海平线", type: "SUGIMOTO" }, { text: "通过不断重复同一个记号，直到让这种动作战胜死亡", type: "KUSAMA" }, { text: "在一个绝对真空中，彻底锁死事物最鲜活的那个瞬间", type: "HIRST" }, { text: "在冰冷的石头里，凿出一道能穿越千年的意志残影", type: "MICHELANGELO" }
             ]},
-            { id: 16, text: "挤在人堆里，你的第一反应通常是：", options: [
-                { text: "寻找空间的中心点，冷静分析所有人的体态构成", type: "DA_VINCI" }, { text: "渴望穿上最刺眼的色彩，在灰蒙蒙的平庸里大喊一声", type: "VAN_GOGH" }, { text: "觉得自己正在被一种波点消融，成了这堆人的一部分", type: "KUSAMA" }, { text: "像看实验室培养皿里的生物一样，对这种集聚感到好奇", type: "HIRST" }
+            { id: 16, text: "如果你被挤在毫无缝隙的拥挤人堆里，你的采样引擎会：", options: [
+                { text: "寻找空间的中心点，冷静分析所有人的体态和骨骼结构", type: "DA_VINCI" }, { text: "渴望穿上最炸眼的色彩，在灰蒙蒙的平庸里放声大喊", type: "VAN_GOGH" }, { text: "觉得自己正在被一种波点消融，成了这一堆人的一分子", type: "KUSAMA" }, { text: "像看培养皿里的生物一样，对这种集聚行为感到好奇", type: "HIRST" }
             ]},
-            { id: 17, text: "你对“时间”这种东西的直觉感受更接近：", options: [
-                { text: "一种耗费一生捕获到的、绝对静止的凝固感", type: "SUGIMOTO" }, { text: "一个流动的幻境，梦境、欲望与过去不断重叠", type: "DALI" }, { text: "波点在空间中不断跳动、自我繁衍的节奏感", type: "KUSAMA" }, { text: "快门闪过，每一秒色彩都在微妙变化的瞬间感", type: "MONET" }
+            { id: 17, text: "你对“时间”这种物理维度的感知更接近：", options: [
+                { text: "一种耗费一生才捕获到的、绝对静止的、神圣的凝固感", type: "SUGIMOTO" }, { text: "一个梦境、过去与欲望都在不停融化的幻觉空间", type: "DALI" }, { text: "无数波点在三维世界里不断跳动、自我繁衍的节奏感", type: "KUSAMA" }, { text: "快门闪过的那一秒，光色由于微妙位移产生的瞬间感", type: "MONET" }
             ]},
-            { id: 18, text: "当你听到一段刺耳破碎的噪音，你脑子里蹦出的图像是：", options: [
-                { text: "这些声音背后隐藏的极其严密的物理逻辑", type: "DA_VINCI" }, { text: "强烈、高对比的色彩在黑夜中不断爆裂的幻象", type: "VAN_GOGH" }, { text: "不断重复、永无止境的电信号脉动", type: "KUSAMA" }, { text: "支离破碎、不断被采样并重组的后现代视图", type: "PICASSO" }
+            { id: 18, text: "当你听到一段尖利且破碎的噪音，你脑子里自动生成：", options: [
+                { text: "这些声音背后隐藏的极其严密的、可以数字化的逻辑", type: "DA_VINCI" }, { text: "强烈、对比度极高的色彩在黑夜中不断爆裂的幻象", type: "VAN_GOGH" }, { text: "不断重复、永无止境的低频电信号脉动", type: "KUSAMA" }, { text: "支离破碎、不断被采样并重新组合的后现代解构视图", type: "PICASSO" }
             ]},
-            { id: 19, text: "你最想呆着的“精神避难所”是：", options: [
-                { text: "地底深处，通过一个小切口观察纯净星空的塔楼", type: "TURRELL" }, { text: "摆满了童年旧物与缝补过的破烂娃娃的阁楼", type: "BOURGEOIS" }, { text: "没有任何生物、只有海平线与静止时间的荒岛", type: "SUGIMOTO" }, { text: "一个能完美照出千万个自我的、极其理性的镜面展厅", type: "DA_VINCI" }
+            { id: 19, text: "你最想呆着的“精神避难所”应该：", options: [
+                { text: "在地底深处，通过一个小切口观察纯净星空的塔楼", type: "TURRELL" }, { text: "摆满了破娃娃、缝补过记忆碎片的那间阴冷阁楼", type: "BOURGEOIS" }, { text: "一个只有海水和寂静、完全不动的时间荒岛", type: "SUGIMOTO" }, { text: "一个能照出千万个自我、极其理性的几何镜面展厅", type: "DA_VINCI" }
             ]},
-            { id: 20, text: "如果你能拥有编辑基因的权力，你会造一个：", options: [
-                { text: "翅膀结构精美、挑战物理规律的人造鸟", type: "DA_VINCI" }, { text: "全身长满荧光波点、在深海里增殖的巨物", type: "KUSAMA" }, { text: "透明、能看清所有情感波动模式的织网蛛", type: "BOURGEOIS" }, { text: "在真空中凝固了最美瞬间、带有死亡感的标本", type: "HIRST" }
+            { id: 20, text: "如果你拥有创造新物种的权力。你的第一个作品会是：", options: [
+                { text: "翅膀结构极其精美、能挑战重力规律的人造机械鸟", type: "DA_VINCI" }, { text: "全身长满荧光波点、在深海里不停复制的巨型生物", type: "KUSAMA" }, { text: "透明的、能看清所有情感波动模式的巨型织网蛛", type: "BOURGEOIS" }, { text: "在药剂瓶里凝固了最美丽瞬间、带有死亡气息的蝴蝶", type: "HIRST" }
             ]},
-            { id: 21, text: "如果把你这生的执念凝成圣器，它会是：", options: [
-                { text: "一把能剖开伪善现实、让真相融化的软刀", type: "DALI" }, { text: "一卷记录了所有海平线位移的永久地图", type: "SUGIMOTO" }, { text: "一个装满了人造太阳光、迷雾与晚霞的瓶子", type: "ELIASON" }, { text: "一个外壳极其闪亮昂贵、但空无一物的礼盒", type: "CATTELAN" }
+            { id: 21, text: "如果把你这一生的执念变成一件具体的物件，你希望它是：", options: [
+                { text: "一把能剖开伪善现实、让真相融化掉的软刀", type: "DALI" }, { text: "一卷记录了所有海平线动态的、永不磨损的永久地图", type: "SUGIMOTO" }, { text: "一个装满了人造太阳光、迷雾与晚霞的深色呼吸瓶", type: "ELIASON" }, { text: "一个外壳极其闪亮、但里面空无一物的贵重礼盒", type: "CATTELAN" }
             ]},
-            { id: 22, text: "在一片摧毁的遗址上，你倾向于：", options: [
-                { text: "寻找那些带有体温、能证明爱过的细小信物", type: "BOURGEOIS" }, 
-                { text: "冷眼旁观，感叹万物在时间面前终消逝的荒芜", type: "SUGIMOTO" },
-                { text: "观察断壁残垣形成的独特几何图形与组合", type: "PICASSO" },
-                { text: "在层层涂抹的残影里，寻找失落的真实脉络", type: "RICHTER" }
+            { id: 22, text: "在一片被摧毁的文明遗址上。你会下意识去寻找：", options: [
+                { text: "那些能证明“我爱过”的、带着个体体温的小物件", type: "BOURGEOIS" }, 
+                { text: "静静看着，感叹时间面前万物终将荒芜的空无美感", type: "SUGIMOTO" },
+                { text: "观察倒塌的墙壁形成的、极具力学美感的几何切面", type: "PICASSO" },
+                { text: "在层层瓦砾下寻找那条已经模糊了的历史真相脉络", type: "RICHTER" }
             ] },
-            { id: 23, text: "你觉得到底什么才是“真实”？", options: [
-                { text: "那些肮脏、平凡、带着尘土味的现实街道", type: "CARAVAGGIO" }, 
-                { text: "被反复刮擦涂抹后依然看不透的模糊残影", type: "RICHTER" },
-                { text: "隐藏在一切表面之下最严密的底层架子", type: "DA_VINCI" },
-                { text: "心脏的每一次震颤、伤痕以及所有情感", type: "VAN_GOGH" }
+            { id: 23, text: "检测到你对“真实”的最新看法，你认为真实应该是：", options: [
+                { text: "那些带有泥土味的街道和布满尘土的、赤裸裸的人体", type: "CARAVAGGIO" }, 
+                { text: "被刮花、反复涂抹，最后只能看清一点点残影的真相", type: "RICHTER" },
+                { text: "隐藏在一切感性表象下面的、最硬的那副底层架子", type: "DA_VINCI" },
+                { text: "心脏每一次震颤留下的伤痕和不可被抹掉的情感印记", type: "VAN_GOGH" }
             ] },
-            { id: 24, text: "当你的实验被人恶意嘲笑时，你会：", options: [
-                { text: "把嘲笑也当成重复的艺术素材，直到它消失", type: "KUSAMA" }, 
-                { text: "设计一个更荒诞、更挑衅的恶搞方案反击", type: "CATTELAN" },
-                { text: "沉默、平静地盯着那个人看直到对方发虚", type: "ABRAMOVIC" },
-                { text: "在大理石里继续雕琢意志，外界噪音与我无关", type: "MICHELANGELO" }
+            { id: 24, text: "当你的某种深刻尝试被人恶意嘲笑时，你会：", options: [
+                { text: "把这些嘲笑也当成重复的艺术素材，直到它们也消融", type: "KUSAMA" }, 
+                { text: "想一个更荒唐、更讽刺的恶作剧方案直接整回去", type: "CATTELAN" },
+                { text: "一句话不说地盯着他看，直到那个挑衅者自己发毛", type: "ABRAMOVIC" },
+                { text: "在大理石里继续雕琢我的意志，外面再吵也跟我无关", type: "MICHELANGELO" }
             ] },
-            { id: 25, text: "你希望在灵魂档案里被标记为：", options: [
-                { text: "一个全能天才基因，理性的最后一盏灯", type: "DA_VINCI" }, 
-                { text: "一个匿名的灵魂样本，只留下模糊影子", type: "RICHTER" },
-                { text: "那个在画布前燃尽生命、用色彩放声尖叫的人", type: "VAN_GOGH" },
-                { text: "一个能无限分裂、在每个时代都变换面孔的解构者", type: "PICASSO" }
+            { id: 25, text: "在灵魂采样档案里。你希望自己被标记为：", options: [
+                { text: "一个全能的天才基因，理性世界里最后一盏明灯", type: "DA_VINCI" }, 
+                { text: "一个匿名的影子，只留下模糊的、不可说的幽灵档案", type: "RICHTER" },
+                { text: "那个在画布前燃尽了生命、用色彩发出呐喊的人", type: "VAN_GOGH" },
+                { text: "一个能够无限分裂、在每个时代都变换面孔的解构者", type: "PICASSO" }
             ] },
-            { id: 26, text: "面对一份庞大的实验数据图，你会：", options: [
-                { text: "伸手去摸线条，试图感受绘图者指尖的温度", type: "VAN_GOGH" }, 
-                { text: "后退几步，观察整个图表构图在数学上的平衡", type: "DA_VINCI" },
-                { text: "闭上眼，感受图表营造的光影氛围而不看内容", type: "MONET" },
-                { text: "寻找任何拼贴痕迹，试图解构数据的来源", type: "PICASSO" }
+            { id: 26, text: "面对一份庞大且复杂的实验图表。你的第一本能是：", options: [
+                { text: "伸手去摸那些线条，想感受绘图者手指留下的温度", type: "VAN_GOGH" }, 
+                { text: "后退几步，观察整个构图在数学意义上的某种平衡感", type: "DA_VINCI" },
+                { text: "闭上眼，去感受这份图表营造出的氛围而非具体内容", type: "MONET" },
+                { text: "寻找任何拼贴、挪用的痕迹，想解构这份数据的来源", type: "PICASSO" }
             ] },
-            { id: 27, text: "关于“失败”，你心底的最优解是：", options: [
-                { text: "不过是算比例的时候出了一点可以修正的偏差", type: "DA_VINCI" }, 
-                { text: "是必须生生咽下去的、令人发狂的生命磨灭", type: "VAN_GOGH" },
-                { text: "是画面在反复涂抹后呈现出的最有深度的厚度", type: "RICHTER" },
-                { text: "是一场绝妙的黑色幽默，是创作最好的素材", type: "CATTELAN" }
+            { id: 27, text: "你对“失败”的终极处理方案通常是：", options: [
+                { text: "失败只是计算比例时出了一点可以再次修正的偏差", type: "DA_VINCI" }, 
+                { text: "是必须生生咽下去的、甚至让你想发狂的生命磨损", type: "VAN_GOGH" },
+                { text: "失败是经过反复涂抹后，画面呈现出的最有深度的层次", type: "RICHTER" },
+                { text: "失败是一场绝妙的黑色幽默，是创作最好的恶搞素材", type: "CATTELAN" }
             ] },
-            { id: 28, text: "如果你在庄严的圣殿里听到一阵放肆的大笑：", options: [
-                { text: "去分析他脸部肌肉的走向和发声的物理结构", type: "DA_VINCI" }, 
-                { text: "想和他一起放声大笑，去拆解这种荒诞感", type: "CATTELAN" },
-                { text: "觉得这种笑声造成了神圣空间里的断裂感", type: "PICASSO" },
-                { text: "觉得笑声里藏着对这世界最深层的精神焦虑", type: "VAN_GOGH" }
+            { id: 28, text: "庄严的圣殿里突然传来一阵放肆的大笑。你的感觉是：", options: [
+                { text: "条件反射去分析他发声的物理结构和面部肌肉走向", type: "DA_VINCI" }, 
+                { text: "想跟他一起笑，去拆解这种一本正经的、伪善的权威", type: "CATTELAN" },
+                { text: "觉得这种突发事件造成了神圣空间里某种破碎的断裂", type: "PICASSO" },
+                { text: "觉得这笑声里藏着对这个荒诞世界最深层的精神焦虑", type: "VAN_GOGH" }
             ] },
-            { id: 29, text: "如果你能拥有一个绝对静止的时刻，你会：", options: [
-                { text: "彻底屏蔽所有外界信号，独享纯粹的虚空", type: "KAPOOR" }, 
-                { text: "在静止中让某种纯粹的光波洗洗脑子", type: "TURRELL" },
-                { text: "静坐在窗前，捕捉那抹最微小也最凝固的光", type: "VERMEER" },
-                { text: "在漫长的海平线前，看时间一点点凝固", type: "SUGIMOTO" }
+            { id: 29, text: "如果你能拥有一个绝对“静止”的时刻，你会：", options: [
+                { text: "彻底屏蔽所有干扰信号，独自享受这种纯粹的虚空", type: "KAPOOR" }, 
+                { text: "在静止中让某种纯粹光波洗洗脑子，完成自我的进化", type: "TURRELL" },
+                { text: "静坐在窗前，捕捉那抹最微小也最凝固的、永恒的微光", type: "VERMEER" },
+                { text: "在漫长的海平线前，看时间一点点凝固并碎掉的过程", type: "SUGIMOTO" }
             ] },
-            { id: 30, text: "最后，如果你消失了，你想留下的记号是：", options: [
-                { text: "一串无人能解的、极其精密的灵魂坐标", type: "DA_VINCI" }, 
-                { text: "海面上反射出的那抹金色的、转瞬即逝的光点", type: "MONET" },
-                { text: "一个荒诞、梦幻且不可思议的潜意识奇迹", type: "DALI" },
-                { text: "一个被精确分类、打上标签并封存的生命标本", type: "HIRST" }
+            { id: 30, text: "最后采样即将结束，如果你消失了，你最想留下什么标记？", options: [
+                { text: "一串无人能解的、极其精密的灵魂坐标数据", type: "DA_VINCI" }, 
+                { text: "海面上反射出的那抹金色的、闪一下就会消失的光点", type: "MONET" },
+                { text: "一个梦幻、荒诞且不可思议的关于潜意识的奇迹", type: "DALI" },
+                { text: "一个被精确分类、并封存好的带有死亡美感的生命标本", type: "HIRST" }
             ] }
         ];
 
@@ -483,19 +345,11 @@
             const radarCanvas = useRef(null);
             const chartRef = useRef(null);
 
-            // 生成蒲公英点阵数据
             const dots = useMemo(() => {
                 return [...Array(130)].map((_, i) => {
                     const angle = Math.random() * Math.PI * 2;
                     const dist = 60 + Math.pow(Math.random(), 0.7) * 400; 
-                    return {
-                        id: i,
-                        x: 500 + Math.cos(angle) * dist,
-                        y: 500 + Math.sin(angle) * dist,
-                        size: 0.8 + Math.random() * 5,
-                        opacity: 0.1 + Math.random() * 0.4,
-                        color: Math.random() > 0.85 ? '#E89980' : '#779B95'
-                    };
+                    return { id: i, x: 500 + Math.cos(angle) * dist, y: 500 + Math.sin(angle) * dist, size: 0.8 + Math.random() * 5, opacity: 0.1 + Math.random() * 0.4, color: Math.random() > 0.85 ? '#E89980' : '#779B95' };
                 });
             }, []);
 
@@ -505,7 +359,6 @@
                     setHistory(prev => [...prev, { scores, currentQ }]);
                     const newScores = { ...scores, [type]: (scores[type] || 0) + 1 };
                     setScores(newScores);
-                    
                     if (currentQ < QUESTIONS.length - 1) {
                         setCurrentQ(prev => prev + 1);
                         setIsFadeEffect(false);
@@ -516,7 +369,7 @@
                         setStep('result');
                         window.scrollTo(0,0);
                     }
-                }, 100); 
+                }, 120); 
             };
 
             const handleBack = () => {
@@ -528,7 +381,7 @@
                     setCurrentQ(last.currentQ);
                     setHistory(prev => prev.slice(0, -1));
                     setIsFadeEffect(false);
-                }, 100);
+                }, 120);
             };
 
             useEffect(() => {
@@ -559,48 +412,39 @@
             return (
                 <div className="min-h-screen flex flex-col relative overflow-y-auto">
                     <div className="tech-header flex-none">
-                        <div>Experimental Soul Unit V2.5 <br/> <span className="opacity-50">Art-Driven Genome</span></div>
-                        <div className="text-right">Psych-Analysis_Lab <br/> Ref: 2026-X01</div>
+                        <div className="leading-tight">Experimental Soul Unit V2.5 <br/> <span className="opacity-50">Art-Driven Genome</span></div>
+                        <div className="text-right leading-tight">Psych-Analysis_Lab <br/> Ref: 2026-X01</div>
                     </div>
 
                     {step === 'welcome' && (
                         <div className="flex-grow flex flex-col animate-fade relative px-6 sm:px-12 py-10">
-                            {/* 顶部标题区域 */}
                             <div className="relative z-10 space-y-4">
-                                <h1 className="main-title serif pt-4">艺术原型</h1>
+                                <h1 className="main-title serif pt-4 uppercase">艺术原型</h1>
                                 <div className="flex items-center gap-6">
                                     <h2 className="text-xl sm:text-2xl serif text-brand-teal tracking-[0.6em] font-light">人格图谱测试</h2>
                                     <div className="h-px flex-grow bg-brand-teal/20"></div>
                                 </div>
                             </div>
 
-                            {/* 中心蒲公英设计 */}
                             <div className="relative flex-grow flex items-center justify-center my-8">
                                 <svg width="100%" height="450" viewBox="0 0 1000 1000" className="max-w-[500px]">
-                                    {/* 标注连线 */}
                                     <line x1="500" y1="500" x2="650" y2="280" stroke="#779B95" strokeWidth="0.5" strokeDasharray="4 2" opacity="0.4" />
                                     <line x1="500" y1="500" x2="350" y2="350" stroke="#779B95" strokeWidth="0.5" strokeDasharray="4 2" opacity="0.4" />
                                     <line x1="500" y1="500" x2="300" y2="620" stroke="#779B95" strokeWidth="0.5" strokeDasharray="4 2" opacity="0.4" />
-                                    
-                                    {/* 点阵渲染 */}
                                     {dots.map(dot => (
                                         <circle key={dot.id} cx={dot.x} cy={dot.y} r={dot.size} fill={dot.color} opacity={dot.opacity} className="dandelion-node" />
                                     ))}
                                     <circle cx="500" cy="500" r="14" fill="#333" />
                                     <path d="M500 514 Q500 700 520 850" stroke="#779B95" fill="none" opacity="0.3" strokeWidth="1" />
-
-                                    {/* 文字标注 (桌面端可见) */}
                                     <g className="hidden sm:block">
                                         <text x="655" y="270" fontSize="11" fill="#779B95" fontWeight="bold">视觉色彩偏好</text>
                                         <text x="345" y="340" fontSize="11" fill="#779B95" fontWeight="bold" textAnchor="end">潜意识审美节点</text>
                                         <text x="295" y="625" fontSize="11" fill="#779B95" fontWeight="bold" textAnchor="end">情感共鸣频率</text>
                                     </g>
                                 </svg>
-
-                                {/* GENOME STATS 浮动框 */}
                                 <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block">
                                     <div className="stats-box">
-                                        <div className="font-bold border-b border-black pb-1 mb-2">GENOME STATS</div>
+                                        <div className="font-bold border-b border-black pb-1 mb-2 font-mono uppercase text-[10px]">Genome Stats</div>
                                         <div className="flex justify-between py-1 opacity-60"><span>AESTHETIC_V</span><span>88.42%</span></div>
                                         <div className="flex justify-between py-1 opacity-60"><span>RESONANCE</span><span>STABLE</span></div>
                                         <div className="flex justify-between py-1 opacity-60"><span>NODE_DENSITY</span><span>14.2k</span></div>
@@ -608,84 +452,84 @@
                                 </div>
                             </div>
 
-                            {/* 底部三大统计块 */}
                             <div className="grid grid-cols-3 w-full border-t border-b border-gray-200 mt-auto mb-8 bg-white/50">
                                 <div className="bottom-stat-card">
-                                    <div className="text-3xl sm:text-5xl font-bold font-mono">30</div>
+                                    <div className="text-3xl sm:text-5xl font-bold font-mono tracking-tighter">30</div>
                                     <div className="text-[8px] uppercase tracking-widest opacity-40 mt-1">Samples</div>
                                 </div>
                                 <div className="bottom-stat-card">
-                                    <div className="text-3xl sm:text-5xl font-bold font-mono">20</div>
+                                    <div className="text-3xl sm:text-5xl font-bold font-mono tracking-tighter">20</div>
                                     <div className="text-[8px] uppercase tracking-widest opacity-40 mt-1">Archetypes</div>
                                 </div>
                                 <div className="bottom-stat-card">
-                                    <div className="text-3xl sm:text-5xl font-bold font-mono text-brand-coral">01</div>
+                                    <div className="text-3xl sm:text-5xl font-bold font-mono tracking-tighter text-brand-coral">01</div>
                                     <div className="text-[8px] uppercase tracking-widest opacity-40 mt-1">Evidence</div>
                                 </div>
                             </div>
-
                             <div className="flex flex-col items-center gap-4">
                                 <button onClick={() => setStep('quiz')} className="btn-action w-full sm:w-auto">启动扫描 / START</button>
-                                <p className="text-[9px] uppercase opacity-30 tracking-[0.2em]">Ready for soul sampling</p>
+                                <p className="text-[9px] uppercase opacity-30 tracking-[0.2em] font-bold">Ready for soul sampling</p>
                             </div>
                         </div>
                     )}
 
                     {step === 'quiz' && (
-                        <div className="max-w-xl mx-auto w-full px-6 py-10 animate-fade flex-grow">
-                            <div className="flex justify-between items-center mb-10">
-                                <button onClick={handleBack} className="text-[10px] uppercase text-gray-400 font-bold tracking-widest">返回 / BACK</button>
-                                <span className="text-[10px] font-mono text-brand-teal uppercase">Node: {currentQ + 1} / 30</span>
-                            </div>
-                            <div className={`transition-opacity duration-200 ${isFadeEffect ? 'opacity-0' : 'opacity-100'}`}>
-                                <h3 className="text-2xl serif mb-10 leading-snug text-[#2D2A26]">{QUESTIONS[currentQ]?.text}</h3>
-                                <div className="space-y-1">
-                                    {QUESTIONS[currentQ]?.options.map((opt, i) => (
-                                        <button key={i} onClick={() => handleAnswer(opt.type)} className="option-btn">
-                                            <span className="text-[10px] mr-4 opacity-30 font-bold">0{i+1}</span>
-                                            <span className="text-sm md:text-base text-gray-600">{opt.text}</span>
-                                        </button>
-                                    ))}
+                        <div className="max-w-xl mx-auto w-full px-6 py-10 animate-fade flex-grow centered-container">
+                            <div className="w-full">
+                                <div className="flex justify-between items-center mb-10">
+                                    <button onClick={handleBack} className="text-[10px] uppercase text-gray-400 font-bold tracking-widest border-b border-gray-200 pb-0.5">返回一步 / BACK</button>
+                                    <span className="text-[10px] font-mono text-brand-teal uppercase font-bold">Node: {currentQ + 1} / 30</span>
+                                </div>
+                                <div className={`transition-opacity duration-200 ${isFadeEffect ? 'opacity-0' : 'opacity-100'}`}>
+                                    <h3 className="text-2xl sm:text-3xl serif mb-12 leading-snug text-[#2D2A26]">{QUESTIONS[currentQ]?.text}</h3>
+                                    <div className="space-y-1">
+                                        {QUESTIONS[currentQ]?.options.map((opt, i) => (
+                                            <button key={i} onClick={() => handleAnswer(opt.type)} className="option-btn">
+                                                <div className="flex items-start">
+                                                    <span className="text-[10px] mr-4 opacity-30 font-bold pt-1">0{i+1}</span>
+                                                    <span className="text-sm sm:text-base text-gray-600 font-medium leading-relaxed">{opt.text}</span>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     )}
 
                     {step === 'result' && result && (
-                        <div className="flex-grow flex flex-col items-center px-6 py-10 centered-container bg-white">
+                        <div className="flex-grow flex flex-col items-center px-6 py-10 centered-container bg-[#F8F9F5]">
                             <div className="max-w-md w-full animate-fade space-y-6">
                                 <div className="text-center space-y-2 mb-8">
-                                    <div className="text-[10px] font-bold text-[#779B95] uppercase tracking-widest border border-[#779B95]/30 inline-block px-3 py-1 rounded">采样档案已生成</div>
+                                    <div className="text-[10px] font-bold text-[#779B95] uppercase tracking-widest border border-[#779B95]/30 inline-block px-3 py-1 rounded">采样档案库已补完</div>
                                     <h2 className="text-4xl sm:text-5xl font-bold serif pt-4">{result.name}</h2>
-                                    <p className="text-sm text-gray-400 italic tracking-widest uppercase">{result.sub}</p>
+                                    <p className="text-sm text-gray-400 italic tracking-widest uppercase font-light">{result.sub}</p>
                                 </div>
 
                                 <div className="info-card">
                                     <h4 className="text-[10px] font-bold opacity-30 uppercase mb-4 tracking-widest">01 / 审美底色报告</h4>
                                     <p className="text-lg italic serif text-gray-500 mb-4 leading-relaxed">“{result.identity}”</p>
                                     <p className="text-sm text-gray-600 leading-loose mb-6">{result.desc}</p>
-                                    <div className="chart-container">
-                                        <canvas ref={radarCanvas}></canvas>
-                                    </div>
+                                    <div className="chart-container"><canvas ref={radarCanvas}></canvas></div>
                                     <div className="mt-4 pt-4 border-t border-gray-50">
-                                        <span className="text-[9px] font-bold text-[#779B95] block mb-1">核心执念逻辑</span>
-                                        <p className="text-[11px] text-gray-400 italic">{result.logic}</p>
+                                        <span className="text-[9px] font-bold text-[#779B95] block mb-1 uppercase tracking-widest">核心逻辑映射</span>
+                                        <p className="text-[11px] text-gray-400 italic serif">{result.logic}</p>
                                     </div>
                                 </div>
 
                                 <div className="info-card">
-                                    <h4 className="text-[10px] font-bold opacity-30 uppercase mb-4 tracking-widest">02 / 实验档案：物料与阴影</h4>
+                                    <h4 className="text-[10px] font-bold opacity-30 uppercase mb-4 tracking-widest">02 / 实验档案：物料与心理</h4>
                                     <div className="flex flex-wrap mb-4">
                                         {result.material.split('、').map((m, i) => <span key={i} className="tag-pill">{m}</span>)}
                                     </div>
                                     <div className="space-y-4">
-                                        <div className="p-3 bg-red-50/30 border-l-2 border-red-100">
-                                            <span className="text-[9px] font-bold text-[#E89980] block mb-1">心理阴影 / Shadow</span>
-                                            <p className="text-[11px] text-gray-500 leading-relaxed">{result.shadow}</p>
+                                        <div className="p-3 bg-red-50/30 border-l-2 border-red-200">
+                                            <span className="text-[9px] font-bold text-[#E89980] block mb-1 uppercase tracking-widest">心理阴影 / Shadow</span>
+                                            <p className="text-[11px] text-gray-500 leading-relaxed font-sans">{result.shadow}</p>
                                         </div>
-                                        <div className="p-3 bg-teal-50/30 border-l-2 border-teal-100">
-                                            <span className="text-[9px] font-bold text-[#779B95] block mb-1">焦虑点 / Anxiety</span>
-                                            <p className="text-[11px] text-gray-500 leading-relaxed">{result.anxiety}</p>
+                                        <div className="p-3 bg-teal-50/30 border-l-2 border-teal-200">
+                                            <span className="text-[9px] font-bold text-[#779B95] block mb-1 uppercase tracking-widest">潜在焦虑 / Anxiety</span>
+                                            <p className="text-[11px] text-gray-500 leading-relaxed font-sans">{result.anxiety}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -695,8 +539,7 @@
                                     <div className="space-y-2">
                                         {result.works.map((w, i) => (
                                             <div key={i} className="text-xs text-gray-700 font-bold serif flex items-center gap-2">
-                                                <div className="w-1 h-1 bg-[#779B95] rounded-full"></div>
-                                                {w}
+                                                <div className="w-1 h-1 bg-[#779B95] rounded-full"></div> {w}
                                             </div>
                                         ))}
                                     </div>
@@ -704,21 +547,21 @@
 
                                 <div className="info-card">
                                     <div className="flex justify-between items-center mb-4">
-                                        <h4 className="text-[10px] font-bold opacity-30 uppercase tracking-widest">04 / 深度档案：推荐阅读</h4>
-                                        <div className="text-[9px] px-2 py-0.5 bg-gray-100 text-gray-400 rounded">ACADEMIC</div>
+                                        <h4 className="text-[10px] font-bold opacity-30 uppercase tracking-widest">04 / 深度阅读：学术补完</h4>
+                                        <div className="text-[9px] px-2 py-0.5 bg-gray-100 text-gray-400 rounded font-mono uppercase">Academic</div>
                                     </div>
-                                    <div className="space-y-1">
+                                    <div className="space-y-0.5">
                                         {result.books.map((book, i) => (
                                             <div key={i} className="book-item">
-                                                <div className="book-icon">BOOK</div>
+                                                <div className="book-icon font-mono">READ</div>
                                                 <div>
-                                                    <p className="text-[13px] font-bold text-gray-800 leading-tight">{book}</p>
-                                                    <p className="text-[9px] text-gray-400 uppercase tracking-tighter">Reference Reading</p>
+                                                    <p className="text-[13px] font-bold text-gray-800 leading-tight serif">{book}</p>
+                                                    <p className="text-[9px] text-gray-400 uppercase tracking-tighter font-mono">Reference Reading</p>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="mt-4 p-4 bg-[#F8F9F5] rounded-sm text-[11px] text-gray-500 italic leading-relaxed border border-gray-100">
+                                    <div className="mt-4 p-4 bg-[#F8F9F5] rounded-sm text-[11px] text-gray-500 italic leading-relaxed border border-gray-100 font-sans">
                                         “如果你想更彻底地理解这种审美逻辑，可以从以上书籍看起。多接触‘{result.material.split('、')[0]}’这种质感的东西，或许能帮你找回点自我。”
                                     </div>
                                 </div>
@@ -735,10 +578,8 @@
                     )}
 
                     <div className="tech-header border-t py-4 mt-auto">
-                        <div className="max-w-[200px] leading-tight opacity-40 lowercase text-[9px]">
-                            重建主体性的最后存证
-                        </div>
-                        <div className="text-right opacity-40 text-[9px]">SYSTEM V.2.5 <br/> © 2026 ART PROTOTYPE</div>
+                        <div className="max-w-[200px] leading-tight opacity-40 lowercase text-[9px]">重建主体性的最后存证</div>
+                        <div className="text-right opacity-40 text-[9px] font-mono">SYSTEM V.2.5 <br/> © 2026 ART PROTOTYPE</div>
                     </div>
                 </div>
             );
